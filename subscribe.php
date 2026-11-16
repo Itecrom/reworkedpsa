@@ -1,23 +1,28 @@
 <?php
 include 'includes/db.php';
+require_once 'includes/public_form_security.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: index.php");
+    header('Location: index.php', true, 303);
     exit;
 }
 
-// Clean inputs
-$name  = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-
-// Validate
-if (empty($name) || empty($email)) {
-    header("Location: index.php?sub=empty");
+$formError = validatePublicForm('newsletter');
+if ($formError !== '') {
+    header('Location: index.php?sub=' . ($formError === 'rate' ? 'rate' : 'invalid'), true, 303);
     exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header("Location: index.php?sub=invalid");
+$name = trim((string)($_POST['name'] ?? ''));
+$email = trim((string)($_POST['email'] ?? ''));
+
+if ($name === '' || $email === '') {
+    header('Location: index.php?sub=empty', true, 303);
+    exit;
+}
+
+if (mb_strlen($name) > 255 || mb_strlen($email) > 254 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    header('Location: index.php?sub=invalid', true, 303);
     exit;
 }
 
@@ -27,6 +32,7 @@ ensureSubscribersTable($conn);
 
 // Check duplicates
 $stmt = $conn->prepare("SELECT id FROM subscribers WHERE email = ?");
+$email = mb_strtolower($email);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();
@@ -52,9 +58,9 @@ if (in_array('status', $existing))     { $fields[] = 'status';     $placeholders
 if (in_array('approved', $existing))   { $fields[] = 'approved';   $placeholders[] = '?'; $types .= 'i'; $values[] = 0; }
 if (in_array('created_at', $existing)) { $fields[] = 'created_at'; $placeholders[] = '?'; $types .= 's'; $values[] = date('Y-m-d H:i:s'); }
 
-if (empty($fields)) {
+if (!in_array('email', $existing, true) || !in_array('name', $existing, true)) {
     error_log('Subscribe failed: subscribers table has no usable columns');
-    header("Location: index.php?sub=error");
+    header("Location: index.php?sub=error", true, 303);
     exit;
 }
 
@@ -62,30 +68,23 @@ $sql = "INSERT INTO subscribers (" . implode(', ', $fields) . ") VALUES (" . imp
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
     error_log('Subscribe prepare failed: ' . $conn->error);
-    header("Location: index.php?sub=error");
+    header("Location: index.php?sub=error", true, 303);
     exit;
 }
 $stmt->bind_param($types, ...$values);
-if (!$stmt->execute()) {
+try {
+    $inserted = $stmt->execute();
+} catch (mysqli_sql_exception $e) {
+    error_log('Subscribe insert failed: ' . $e->getMessage());
+    header("Location: index.php?sub=error", true, 303);
+    exit;
+}
+if (!$inserted) {
     error_log('Subscribe insert failed: ' . $stmt->error);
-    header("Location: index.php?sub=error");
+    header("Location: index.php?sub=error", true, 303);
     exit;
 }
 $stmt->close();
 
-// Notify admin
-$adminEmail = "giftlopoti@gmail.com";
-$adminSubject = "New PSA Subscriber";
-$adminMessage = "New subscriber:\nName: $name\nEmail: $email\nStatus: Pending Approval";
-$adminHeaders = "From: PSA Website <no-reply@psamalawi.org>\r\n";
-@mail($adminEmail, $adminSubject, $adminMessage, $adminHeaders);
-
-// Welcome email
-$userSubject = "Welcome to PSA Malawi Newsletter";
-$userMessage = "Hi $name,\n\nThank you for subscribing! Your subscription is pending admin approval.\n\nPSA Malawi Team";
-$userHeaders = "From: PSA Malawi <no-reply@psamalawi.org>\r\n";
-@mail($email, $userSubject, $userMessage, $userHeaders);
-
-// Redirect back
-header("Location: index.php?sub=success");
+header("Location: index.php?sub=success", true, 303);
 exit;

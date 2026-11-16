@@ -1,12 +1,14 @@
 <!-- footer -->
-<footer class="bg-secondary">
+<footer class="site-footer bg-secondary">
   <div class="py-100 border-bottom" style="border-color: green !important">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
           <div class="mb-5 mb-md-0 text-center text-md-left">
             <!-- logo -->
-            <img class="mb-30" src="images/logo-footer.png" alt="logo">
+            <a href="psa.php" aria-label="Malawi Political Science Association home">
+              <img class="footer-logo mb-30" src="images/logo-footer.png" alt="Malawi Political Science Association">
+            </a>
             <p class="text-white mb-30">We have diverse membership of academics and professionals in the fields of political science, 
 				political philosophy, political and economic governance, public administration, international relations, 
 				public law, public policy analysis, human rights and related disciplines relevant to the study, analysis and 
@@ -14,22 +16,22 @@
             <!-- social icon -->
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="">
+                <a class="social-icon-outline" href="https://facebook.com/psamw" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <i class="ti-facebook"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="https://x.com/psa_mw" target="_blank" rel="noopener noreferrer" aria-label="X">
                   <i class="ti-twitter-alt"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="https://instagram.com/malawipsa" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   <i class="ti-vimeo-alt"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="https://linkedin.com/company/political-science-association-mw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <i class="ti-linkedin"></i>
                 </a>
               </li>
@@ -83,12 +85,19 @@
           <div class="mt-5 mt-lg-0 text-center text-md-left">
             <h4 class="mb-4 text-white">Subscribe Us</h4>
             <p class="text-white mb-4">Receive our Newsletters, Opportunities, Events and latest news </p>
-            <form action="subscribe.php" method="POST">
-              <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Your Name">
+            <form action="subscribe.php" method="POST" class="newsletter-form">
+              <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(publicFormToken('newsletter'), ENT_QUOTES, 'UTF-8') ?>">
+              <div class="form-honeypot" aria-hidden="true">
+                <label for="newsletter-website">Leave this field empty</label>
+                <input id="newsletter-website" type="text" name="website" tabindex="-1" autocomplete="off">
               </div>
               <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Your Email">
+                <label class="sr-only" for="newsletter-name">Your name</label>
+                <input id="newsletter-name" type="text" name="name" class="form-control" placeholder="Your Name" maxlength="255" required>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="newsletter-email">Your email</label>
+                <input id="newsletter-email" type="email" name="email" class="form-control" placeholder="Your Email" maxlength="254" required>
               </div>
               <button type="submit" class="btn btn-primary">Subscribe</button>
             </form>
@@ -143,8 +152,7 @@
 <!-- filter -->
 <script src="plugins/filterizr/jquery.filterizr.min.js"></script>
 <!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
-<script  src="plugins/google-map/gmap.js"></script>
+<script src="plugins/google-map/gmap.js"></script>
 <!-- Syo Timer -->
 <script src="plugins/syotimer/jquery.syotimer.js"></script>
 <!-- aos -->
@@ -153,12 +161,5 @@
 <script src="plugins/swiper/swiper.min.js"></script>
 <!-- Main Script -->
 <script src="js/script.js"></script>
-<script>
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    alert("Right-click is disabled on this site.");
-  });
-</script>
-
 </body>
 </html>

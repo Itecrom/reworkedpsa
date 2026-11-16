@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+require_once __DIR__ . '/public_form_security.php';
 
 // Get quick announcement from database (use the main config: includes/db.php)
 require_once __DIR__ . '/db.php';
@@ -52,7 +51,7 @@ try {
 
 /* ===== TOP HEADER ===== */
 .top-header {
-  background: #000;
+  background: #123b2a;
   color: #fff;
   padding: 6px 0;
 }
@@ -97,22 +96,26 @@ try {
 
 .ticker-wrap {
   overflow: hidden;
-  height: 24px;
+  height: 28px;
   position: relative;
 }
 
 .ticker {
   white-space: nowrap;
-  display: inline-block;
-  animation: ticker-scroll 20s linear infinite;
-  padding-left: 100%;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  min-height: 28px;
+  animation: ticker-scroll 32s linear infinite;
 }
 
 .ticker a {
   color: #fff;
-  margin-right: 60px;
+  padding: 0 42px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .03em;
 }
 
 .ticker a:hover {
@@ -120,8 +123,9 @@ try {
   text-decoration: underline;
 }
 
-/* Pause on hover */
-.ticker:hover {
+/* Pause on hover and keyboard focus */
+.news-ticker:hover .ticker,
+.news-ticker:focus-within .ticker {
   animation-play-state: paused;
 }
 
@@ -151,7 +155,11 @@ try {
 /* ===== ANIMATION ===== */
 @keyframes ticker-scroll {
   0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; }
 }
 
 /* ===== MOBILE FIX ===== */
@@ -185,6 +193,10 @@ try {
     margin-top: 6px;
   }
 
+  .ticker a {
+    padding: 0 18px;
+  }
+
 }
 
 </style>
@@ -203,19 +215,32 @@ try {
     <div class="news-ticker">
       <div class="ticker-wrap">
         <div class="ticker">
-          <?php if ($announcement && !empty($announcement['message'])): ?>
-            <?php if (!empty($announcement['link_url'])): ?>
-              <a href="<?= htmlspecialchars($announcement['link_url']) ?>" target="_blank">
-                <?= htmlspecialchars($announcement['message']) ?>
+          <?php
+            $announcementMessage = $announcement['message'] ?? '2026 PSA Biennial Conference: follow the latest news and announcements.';
+            $announcementLink = trim($announcement['link_url'] ?? '');
+            $announcementScheme = strtolower((string)parse_url($announcementLink, PHP_URL_SCHEME));
+            $safeAnnouncementLink = ($announcementLink !== '' && in_array($announcementScheme, ['', 'http', 'https'], true))
+                ? $announcementLink
+                : '';
+          ?>
+          <span class="ticker-item">
+            <?php if ($safeAnnouncementLink !== ''): ?>
+              <a href="<?= htmlspecialchars($safeAnnouncementLink, ENT_QUOTES, 'UTF-8') ?>"<?= $announcementScheme !== '' ? ' target="_blank" rel="noopener noreferrer"' : '' ?>>
+                <span aria-hidden="true">●</span> <?= htmlspecialchars($announcementMessage, ENT_QUOTES, 'UTF-8') ?>
               </a>
             <?php else: ?>
-              <?= htmlspecialchars($announcement['message']) ?>
+              <span class="ticker-message"><span aria-hidden="true">●</span> <?= htmlspecialchars($announcementMessage, ENT_QUOTES, 'UTF-8') ?></span>
             <?php endif; ?>
-          <?php else: ?>
-            <a href="https://malawipsa.org/news/call-for-papers--the-4th-biennial-conference-for-malawi-political-science-association-psa">
-              📢 2026 PSA BIENNIAL CONFERENCE IS AROUND THE CORNER, ARE YOU READY?
-            </a>
-          <?php endif; ?>
+          </span>
+          <span class="ticker-item" aria-hidden="true">
+            <?php if ($safeAnnouncementLink !== ''): ?>
+              <a href="<?= htmlspecialchars($safeAnnouncementLink, ENT_QUOTES, 'UTF-8') ?>" tabindex="-1">
+                <span aria-hidden="true">●</span> <?= htmlspecialchars($announcementMessage, ENT_QUOTES, 'UTF-8') ?>
+              </a>
+            <?php else: ?>
+              <span class="ticker-message"><span aria-hidden="true">●</span> <?= htmlspecialchars($announcementMessage, ENT_QUOTES, 'UTF-8') ?></span>
+            <?php endif; ?>
+          </span>
         </div>
       </div>
     </div>
@@ -259,8 +284,8 @@ try {
     <div class="navigation">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="psa.php">
-                    <img src="images/logo.png" alt="PSA logo">
+                <a class="navbar-brand psa-brand" href="psa.php" aria-label="Malawi Political Science Association home">
+                    <img src="images/logo.png" alt="Malawi Political Science Association logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
