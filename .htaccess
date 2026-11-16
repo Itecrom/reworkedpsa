@@ -1,0 +1,144 @@
+RewriteEngine On
+RewriteBase /
+
+# =====================================
+# FORCE CLEAN URL FOR NEWS (OLD → NEW)
+# =====================================
+RewriteCond %{REQUEST_URI} ^/news-details\.php$ [NC]
+RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
+RewriteRule ^news-details\.php$ /news/%2? [R=301,L]
+
+# =====================================
+# REMOVE .php EXTENSION
+# =====================================
+# Never redirect POST requests — a 301 would turn the POST into a GET and
+# silently drop submitted form data (e.g. the newsletter subscribe form).
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# =====================================
+# CUSTOM ROUTES (PRIORITY)
+# =====================================
+
+# Home
+RewriteRule ^$ index.php [L]
+
+# Static pages
+RewriteRule ^members/?$ members.php [L,QSA]
+RewriteRule ^about/?$ about.php [L,QSA]
+RewriteRule ^contact/?$ contact.php [L,QSA]
+
+# Auth routes
+RewriteRule ^auth/login/?$ auth/login.php [L,QSA]
+RewriteRule ^auth/register/?$ auth/register.php [L,QSA]
+RewriteRule ^auth/logout/?$ auth/logout.php [L,QSA]
+
+# NEWS SLUG (IMPORTANT)
+RewriteRule ^news/([a-zA-Z0-9_-]+)/?$ news-details.php?slug=$1 [L,QSA]
+
+# Admin routes (in admin/ folder)
+RewriteRule ^dashboard/?$ admin/dashboard.php [L,QSA]
+RewriteRule ^profile/?$ admin/profile.php [L,QSA]
+RewriteRule ^audit_log/?$ admin/audit_log.php [L,QSA]
+RewriteRule ^add_journal/?$ admin/add_journal.php [L,QSA]
+RewriteRule ^add_news/?$ admin/add_news.php [L,QSA]
+RewriteRule ^add_event/?$ admin/add_event.php [L,QSA]
+RewriteRule ^add_members/?$ admin/add_members.php [L,QSA]
+RewriteRule ^add_team_member/?$ admin/add_team_member.php [L,QSA]
+RewriteRule ^add_user/?$ admin/add_user.php [L,QSA]
+RewriteRule ^afpart/?$ afpart.php [L,QSA]
+RewriteRule ^conststa/?$ conststa.php [L,QSA]
+RewriteRule ^login/?$ auth/login.php [L,QSA]
+RewriteRule ^register/?$ auth/register.php [L,QSA]
+
+RewriteRule ^manage_comments/?$ admin/manage_comments.php [L,QSA]
+RewriteRule ^manage_journals/?$ admin/manage_journals.php [L,QSA]
+RewriteRule ^manage_news/?$ admin/manage_news.php [L,QSA]
+RewriteRule ^manage_subscribers/?$ admin/manage_subscribers.php [L,QSA]
+RewriteRule ^manage_team/?$ admin/manage_team.php [L,QSA]
+RewriteRule ^manage_users/?$ admin/manage_users.php [L,QSA]
+RewriteRule ^manage_members/?$ admin/manage_members.php [L,QSA]
+RewriteRule ^manage_events/?$ admin/manage_events.php [L,QSA]
+
+# Admin action routes
+RewriteRule ^delete_comment/?$ admin/delete_comment.php [L,QSA]
+RewriteRule ^delete_event/?$ admin/delete_event.php [L,QSA]
+RewriteRule ^delete_journal/?$ admin/delete_journal.php [L,QSA]
+RewriteRule ^delete_members/?$ admin/delete_members.php [L,QSA]
+RewriteRule ^delete_news/?$ admin/delete_news.php [L,QSA]
+RewriteRule ^delete_team_member/?$ admin/delete_team_member.php [L,QSA]
+RewriteRule ^delete_user/?$ admin/delete_user.php [L,QSA]
+RewriteRule ^subscriber_approve/?$ admin/subscriber_approve.php [L,QSA]
+RewriteRule ^subscriber_delete/?$ admin/subscriber_delete.php [L,QSA]
+RewriteRule ^approve_comment/?$ admin/approve_comment.php [L,QSA]
+RewriteRule ^edit_article/?$ admin/edit_article.php [L,QSA]
+RewriteRule ^edit_event/?$ admin/edit_event.php [L,QSA]
+RewriteRule ^edit_featured_news/?$ admin/edit_featured_news.php [L,QSA]
+RewriteRule ^edit_journal/?$ admin/edit_journal.php [L,QSA]
+RewriteRule ^edit_members/?$ admin/edit_members.php [L,QSA]
+RewriteRule ^edit_news/?$ admin/edit_news.php [L,QSA]
+RewriteRule ^edit_team_member/?$ admin/edit_team_member.php [L,QSA]
+RewriteRule ^edit_user/?$ admin/edit_user.php [L,QSA]
+RewriteRule ^journal_analytics/?$ admin/journal_analytics.php [L,QSA]
+RewriteRule ^manage_announcements/?$ admin/manage_announcements.php [L,QSA]
+RewriteRule ^manage_articles/?$ admin/manage_articles.php [L,QSA]
+RewriteRule ^manage_featured_news/?$ admin/manage_featured_news.php [L,QSA]
+RewriteRule ^manage_rsvps/?$ admin/manage_rsvps.php [L,QSA]
+RewriteRule ^add_article/?$ admin/add_article.php [L,QSA]
+RewriteRule ^add_featured_news/?$ admin/add_featured_news.php [L,QSA]
+
+RewriteRule ^membership/?$ membership.php [L,QSA]
+RewriteRule ^journal/?$ journal.php [L,QSA]
+
+# Aliases
+RewriteRule ^psa-history/?$ psa-history.php [L,QSA]
+RewriteRule ^psa-news/?$ psa-news.php [L,QSA]
+
+# =====================================
+# GENERIC CLEAN URL HANDLER (LAST)
+# =====================================
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+# =====================================
+# SECURITY
+# =====================================
+
+# Disable directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "\.(env|ini|log|conf)$">
+  Require all denied
+</FilesMatch>
+
+# Block access to .htaccess
+<Files .htaccess>
+  Require all denied
+</Files>
+
+# Prevent script injection attempts
+RewriteCond %{QUERY_STRING} (\.\.\/|<|>|%3C|%3E) [NC]
+RewriteRule .* - [F,L]
+
+# Prevent access to hidden files
+RewriteRule (^|/)\. - [F]
+
+# Prevent image hotlinking
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://malawipsa.org [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.malawipsa.org [NC]
+RewriteCond %{HTTP_REFERER} !^https://malawipsa.com [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.malawipsa.com [NC]
+RewriteCond %{HTTP_REFERER} !^http://localhost [NC]
+RewriteCond %{HTTP_REFERER} !^http://localhost/PSA [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp|webp)$ - [F,NC]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

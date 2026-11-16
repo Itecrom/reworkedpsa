@@ -1,0 +1,15 @@
+[03-Nov-2026 20:00:33 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'email' in 'field list' in /home/malawips/public_html/admin/edit_team_member.php:43
+Stack trace:
+#0 /home/malawips/public_html/admin/edit_team_member.php(43): mysqli->prepare()
+#1 {main}
+  thrown in /home/malawips/public_html/admin/edit_team_member.php on line 43
+[03-Nov-2026 20:19:08 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'email' in 'field list' in /home/malawips/public_html/admin/edit_team_member.php:43
+Stack trace:
+#0 /home/malawips/public_html/admin/edit_team_member.php(43): mysqli->prepare()
+#1 {main}
+  thrown in /home/malawips/public_html/admin/edit_team_member.php on line 43
+[03-Nov-2026 20:20:17 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'email' in 'field list' in /home/malawips/public_html/admin/edit_team_member.php:43
+Stack trace:
+#0 /home/malawips/public_html/admin/edit_team_member.php(43): mysqli->prepare()
+#1 {main}
+  thrown in /home/malawips/public_html/admin/edit_team_member.php on line 43
