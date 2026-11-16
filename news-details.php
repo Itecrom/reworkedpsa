@@ -263,7 +263,7 @@ $stmtRelated->execute();
 $related = $stmtRelated->get_result();
 
 while ($r = $related->fetch_assoc()) {
-echo '<li><a href="news-details.php?slug=' . htmlspecialchars($r['slug']) . '">' . htmlspecialchars($r['title']) . '</a></li>';
+echo '<li><a href="news/' . rawurlencode($r['slug']) . '">' . htmlspecialchars($r['title']) . '</a></li>';
 }
 ?>
 </ul>

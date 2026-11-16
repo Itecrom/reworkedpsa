@@ -38,7 +38,11 @@ incrementViews($conn, 'journal', $journalId);
 $topics = $conn->query("SELECT * FROM journal_topics WHERE journal_id = " . $journalId . " ORDER BY id ASC");
 $siteBaseUrl = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/');
 $page_title = $journal['title'] . ' | Malawi Political Science Association';
-$meta_description = trim(preg_replace('/\s+/', ' ', strip_tags($journal['summary'] ?: $journal['editorial_summary'] ?? '')));
+$journalDescription = $journal['summary'] ?? '';
+if ($journalDescription === '') {
+  $journalDescription = $journal['editorial_summary'] ?? '';
+}
+$meta_description = trim(preg_replace('/\s+/', ' ', strip_tags($journalDescription)));
 $meta_description = mb_strimwidth($meta_description, 0, 250, '...');
 $journalCover = $journal['cover_image'] ?? $journal['image'] ?? '';
 $og_image = $journalCover !== '' ? $journalCover : '/images/logo.png';

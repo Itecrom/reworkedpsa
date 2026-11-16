@@ -87,7 +87,7 @@ include 'includes/header.php';
         <div class="row">
           <?php while ($row = $result->fetch_assoc()):
             $title = htmlspecialchars($row['title'] ?? '', ENT_QUOTES, 'UTF-8');
-            $slug = urlencode($row['slug'] ?? '');
+            $slug = rawurlencode($row['slug'] ?? '');
             $author = htmlspecialchars($row['author'] ?? 'Admin', ENT_QUOTES, 'UTF-8');
             $date = date('d M Y', strtotime($row['created_at']));
             $tags = htmlspecialchars($row['tags'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -107,7 +107,7 @@ include 'includes/header.php';
                 <h5 class="card-title"><?= $title ?></h5>
                 <p class="text-muted small">By <?= $author ?> | <?= $date ?></p>
                 <p class="card-text"><?= $excerpt ?></p>
-                <a href="news-details.php?slug=<?= $slug ?>" class="btn btn-primary btn-sm">Read More</a>
+                <a href="news/<?= $slug ?>" class="btn btn-primary btn-sm">Read More</a>
               </div>
             </div>
           </div>
@@ -171,17 +171,17 @@ include 'includes/header.php';
             $recentRes = $conn->query("SELECT title, slug, image, date_posted, created_at FROM news WHERE status='published' ORDER BY created_at DESC LIMIT 5");
             while ($r = $recentRes->fetch_assoc()):
               $r_title = htmlspecialchars($r['title']);
-              $r_slug = urlencode($r['slug'] ?? '');
+              $r_slug = rawurlencode($r['slug'] ?? '');
               $r_img = resolveImagePath($r['image'], $r['date_posted'] ?? $r['created_at']);
             ?>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0">
-                <a href="news-details.php?slug=<?= $r_slug ?>">
+                <a href="news/<?= $r_slug ?>">
                   <img src="<?= $r_img ?>" alt="<?= $r_title ?>" style="width: 80px; height: 60px; object-fit: cover;" class="rounded shadow-sm">
                 </a>
               </div>
               <div class="ms-3">
-                <a href="news-details.php?slug=<?= $r_slug ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
+                <a href="news/<?= $r_slug ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
               </div>
             </div>
             <?php endwhile; ?>

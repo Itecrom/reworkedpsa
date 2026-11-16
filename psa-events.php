@@ -319,7 +319,7 @@ Featured
 
 <?php endif; ?>
 
-<a href="event-details.php?slug=<?= urlencode($row['slug']) ?>">
+<a href="events/<?= rawurlencode($row['slug']) ?>">
 
 <?php
   $eventImgPath = 'images/events/event-1.jpg';
@@ -348,7 +348,7 @@ alt="<?= htmlspecialchars($row['title']) ?>"
 <h4 class="mb-3">
 
 <a
-href="event-details.php?slug=<?= urlencode($row['slug']) ?>"
+href="events/<?= rawurlencode($row['slug']) ?>"
 style="text-decoration:none; color:inherit;"
 >
 
@@ -383,7 +383,7 @@ style="text-decoration:none; color:inherit;"
 <div class="mt-auto">
 
 <a
-href="event-details.php?slug=<?= urlencode($row['slug']) ?>"
+href="events/<?= rawurlencode($row['slug']) ?>"
 class="btn btn-primary btn-event"
 >
 
@@ -461,7 +461,7 @@ Latest Events
 
 <div class="latest-event">
 
-<a href="event-details.php?slug=<?= urlencode($latest['slug']) ?>">
+<a href="events/<?= rawurlencode($latest['slug']) ?>">
 
 <?php
   $latestEventImg = 'images/events/event-1.jpg';
@@ -479,7 +479,7 @@ Latest Events
 <div>
 
 <a
-href="event-details.php?slug=<?= urlencode($latest['slug']) ?>"
+href="events/<?= rawurlencode($latest['slug']) ?>"
 class="font-weight-bold d-block"
 style="text-decoration:none;"
 >
@@ -525,7 +525,7 @@ LIMIT 6
 
 <p>
 
-<a href="event-details.php?slug=<?= urlencode($past['slug']) ?>">
+<a href="events/<?= rawurlencode($past['slug']) ?>">
 
 <?= htmlspecialchars($past['title']) ?>
 
