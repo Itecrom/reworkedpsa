@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/public_form_security.php';
+require_once 'includes/page_title.php';
 startPublicFormSession();
 ?>
 
@@ -163,11 +164,10 @@ startPublicFormSession();
 </header>
 
 
-<section class="page-title overlay" style="background-image: url(images/background/membership-title.jpg);">
-    <div class="col-12 text-center">
-      <h2 class="text-white font-weight-bold">PSA MEMBERSHIP</h2>
-    </div>
-</section>
+<?php renderPageTitle('PSA Membership', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Membership', 'url' => ''],
+], 'images/background/membership-title.jpg'); ?>
 
 <!-- Membership -->
 <section class="section">

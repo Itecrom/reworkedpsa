@@ -5,15 +5,10 @@ error_reporting(E_ALL);
 include 'includes/header.php';
 ?>
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg);">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white font-weight-bold">About Malawi PSA</h2>
-            </div>
-        </div>
-    </div>
-</section>
+<?php renderPageTitle('About Malawi PSA', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'About Us', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <section class="section">
     <div class="container">

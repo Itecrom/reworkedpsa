@@ -7,15 +7,11 @@ $featuredNews = $conn->query("SELECT * FROM featured_news WHERE is_active = 1 OR
 ?>
 
 <!-- Page Title -->
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg);">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="text-white font-weight-bold">Featured News</h2>
-      </div>
-    </div>
-  </div>
-</section>
+<?php renderPageTitle('Featured News', [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'News & Events', 'url' => ''],
+  ['label' => 'Featured News', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <section class="section bg-light">
   <div class="container">

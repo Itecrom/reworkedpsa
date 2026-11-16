@@ -2,28 +2,6 @@
 ob_start();
 session_start();
 include 'includes/db.php';
-include 'includes/header.php';
-
-echo '<style>
-.news-content ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-.news-content ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-}
-.pdf-viewer {
-  width: 100%;
-  height: 600px;
-  border: 1px solid #ddd;
-  margin-top: 15px;
-}
-</style>';
-
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 if (!isset($_GET['slug']) || empty($_GET['slug'])) {
     die("No news article specified.");
@@ -111,7 +89,7 @@ $stmt_comments->execute();
 $comments = $stmt_comments->get_result();
 
 /* ================= DATA ================= */
-$title   = htmlspecialchars($row['title']);
+$title   = htmlspecialchars($row['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $author  = !empty($row['author']) ? htmlspecialchars($row['author']) : 'Admin';
 $tags    = $row['tags'];
 $content = $row['content'];
@@ -121,14 +99,14 @@ function resolveImagePath($image, $date) {
     if (!empty($image)) {
         if (strpos($image, 'uploads/') === 0) {
             if (file_exists($image)) {
-                return htmlspecialchars($image, ENT_QUOTES, 'UTF-8');
+                return $image;
             }
         } else {
             $year = date('Y', strtotime($date));
             $month = date('m', strtotime($date));
             $path = "uploads/news/$year/$month/$image";
             if (file_exists($path)) {
-                return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+                return $path;
             }
         }
     }
@@ -137,10 +115,23 @@ function resolveImagePath($image, $date) {
 
 $image = resolveImagePath($row['image'], $row['date_posted'] ?? $row['created_at']);
 
-$fullUrl = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$siteBaseUrl = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/');
+$page_title = $row['title'] . ' | Malawi Political Science Association';
+$meta_description = trim(preg_replace('/\s+/', ' ', strip_tags($row['summary'] ?: $row['content'])));
+$meta_description = mb_strimwidth($meta_description, 0, 250, '...');
+$og_image = $image;
+$canonical_url = $siteBaseUrl . '/news/' . rawurlencode($row['slug']);
+$fullUrl = $canonical_url;
 $pdfUrl = !empty($row['pdf']) ? '/' . ltrim($row['pdf'], '/') : '';
 $pdfPath = !empty($row['pdf']) ? ltrim($row['pdf'], '/') : '';
 ?>
+
+<?php include 'includes/header.php'; ?>
+<style>
+.news-content ul { list-style-type: disc; padding-left: 20px; }
+.news-content ol { list-style-type: decimal; padding-left: 20px; }
+.pdf-viewer { width: 100%; height: 600px; border: 1px solid #ddd; margin-top: 15px; }
+</style>
 
 <!-- Title Banner -->
 <?php
@@ -149,12 +140,12 @@ if ($image !== 'images/events/blogsingle.jpg') {
     $heroBg = '/' . ltrim($image, '/');
 }
 ?>
-<section class="page-title overlay" style="background-image: url('<?= $heroBg ?>');">
-  <div class="container text-center" style="position: relative; z-index: 2;">
-    <h2 class="text-white font-weight-bold"><?= $title ?></h2>
-    <h4 class="text-white">Tags: <?= htmlspecialchars($tags) ?></h4>
-  </div>
-</section>
+<?php renderPageTitle($row['title'], [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'News & Events', 'url' => 'psa-news'],
+    ['label' => 'News', 'url' => 'psa-news'],
+    ['label' => $row['title'], 'url' => ''],
+], $heroBg, !empty($tags) ? 'Tags: ' . $tags : ''); ?>
 
 <!-- Article + Comments -->
 <section>
@@ -164,7 +155,7 @@ if ($image !== 'images/events/blogsingle.jpg') {
       <div class="col-lg-8 py-100">
         <article class="bg-white border rounded">
 
-          <img src="<?= $image ?>" class="img-fluid w-100 rounded-top" alt="<?= $title ?>" />
+          <img src="<?= htmlspecialchars($image, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="img-fluid w-100 rounded-top" alt="<?= $title ?>" />
 
           <div class="p-4">
 

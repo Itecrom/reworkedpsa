@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/public_form_security.php';
+require_once __DIR__ . '/page_title.php';
 startPublicFormSession();
 
 // Get quick announcement from database (use the main config: includes/db.php)
@@ -24,8 +25,6 @@ try {
     <!--Adsense-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4801370358631853" crossorigin="anonymous"></script>
 
-  <meta charset="utf-8">
-  <title>Malawi Political Science Association</title>
   <base href="/">
 
   

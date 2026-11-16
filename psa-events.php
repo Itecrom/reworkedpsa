@@ -1,6 +1,5 @@
 <?php
 include 'includes/db.php';
-include 'includes/header.php';
 
 /* =========================
    SEARCH
@@ -43,19 +42,10 @@ ORDER BY created_at DESC
 LIMIT 5
 ");
 
+$page_title = 'PSA Events | Malawi Political Science Association';
+$meta_description = 'Conferences, seminars, workshops and governance discussions hosted by the Malawi Political Science Association.';
+include 'includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PSA Events</title>
-
-<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
 
 <style>
 
@@ -271,35 +261,15 @@ LIMIT 5
 
 </style>
 
-</head>
-
-<body>
-
 <!-- =========================
      BANNER
 ========================= -->
 
-<section class="page-title overlay"
-style="background-image:url('images/background/page-title.jpg');">
-
-<div class="container text-center">
-
-<h1 class="text-white font-weight-bold mb-3">
-PSA Events
-</h1>
-
-<p class="text-white lead">
-
-PSA Events bring together scholars, professionals,
-researchers and policymakers through conferences,
-seminars, workshops and governance discussions
-that shape Malawi and Africa.
-
-</p>
-
-</div>
-
-</section>
+<?php renderPageTitle('PSA Events', [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'News & Events', 'url' => ''],
+  ['label' => 'Events', 'url' => ''],
+], 'images/background/page-title.jpg', 'PSA Events bring together scholars, professionals, researchers and policymakers through conferences, seminars, workshops and governance discussions that shape Malawi and Africa.'); ?>
 
 <!-- =========================
      EVENTS SECTION
@@ -576,9 +546,3 @@ LIMIT 6
 </section>
 
 <?php include 'includes/footer.php'; ?>
-
-<script src="plugins/jQuery/jquery.min.js"></script>
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-
-</body>
-</html>

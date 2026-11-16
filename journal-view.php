@@ -1,9 +1,9 @@
 <?php
-include 'includes/header.php';
 include 'includes/db.php';
 include 'includes/pdf_helper.php';
 
 if (!isset($_GET['id']) && !isset($_GET['slug'])) {
+  include 'includes/header.php';
   echo "<div class='container py-5 text-center'><h2>Journal not found.</h2></div>";
   include 'includes/footer.php';
   exit;
@@ -14,11 +14,15 @@ if (isset($_GET['id'])) {
   $id = (int)$_GET['id'];
   $journal = $conn->query("SELECT * FROM journals WHERE id = $id")->fetch_assoc();
 } else {
-  $slug = $conn->real_escape_string($_GET['slug']);
-  $journal = $conn->query("SELECT * FROM journals WHERE slug = '$slug'")->fetch_assoc();
+  $stmt = $conn->prepare('SELECT * FROM journals WHERE slug = ? LIMIT 1');
+  $stmt->bind_param('s', $_GET['slug']);
+  $stmt->execute();
+  $journal = $stmt->get_result()->fetch_assoc();
 }
 
 if (!$journal) {
+  http_response_code(404);
+  include 'includes/header.php';
   echo "<div class='container py-5 text-center'><h2>Journal not found.</h2></div>";
   include 'includes/footer.php';
   exit;
@@ -32,18 +36,25 @@ incrementViews($conn, 'journal', $journalId);
 
 // Topics/Articles
 $topics = $conn->query("SELECT * FROM journal_topics WHERE journal_id = " . $journalId . " ORDER BY id ASC");
+$siteBaseUrl = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/');
+$page_title = $journal['title'] . ' | Malawi Political Science Association';
+$meta_description = trim(preg_replace('/\s+/', ' ', strip_tags($journal['summary'] ?: $journal['editorial_summary'] ?? '')));
+$meta_description = mb_strimwidth($meta_description, 0, 250, '...');
+$journalCover = $journal['cover_image'] ?? $journal['image'] ?? '';
+$og_image = $journalCover !== '' ? $journalCover : '/images/logo.png';
+$journalSlug = trim((string)($journal['slug'] ?? ''));
+$canonical_url = $journalSlug !== ''
+    ? $siteBaseUrl . '/journals/' . rawurlencode($journalSlug)
+    : $siteBaseUrl . '/journal-view?id=' . (int)$journalId;
+include 'includes/header.php';
 ?>
 
-<!-- Page Title -->
-<section class="page-title overlay" style="background-image: url(images/background/page-title-3.jpg);">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="text-white font-weight-bold">Journal Details</h2>
-      </div>
-    </div>
-  </div>
-</section>
+<?php renderPageTitle($journal['title'], [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'Publications', 'url' => ''],
+  ['label' => 'Journals', 'url' => 'journal'],
+  ['label' => $journal['title'], 'url' => ''],
+], 'images/background/page-title-3.jpg'); ?>
 
 <section class="section bg-light">
   <div class="container">

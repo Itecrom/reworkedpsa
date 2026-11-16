@@ -166,15 +166,11 @@ $result = $stmt->get_result();
   }
 }
 </style>
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg); padding: 60px 0;">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center text-white">
-        <h2 class="font-weight-bold">PSA Members</h2>
-      </div>
-    </div>
-  </div>
-</section>
+<?php renderPageTitle('PSA Members', [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'Membership', 'url' => 'membership'],
+  ['label' => 'Members', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <section class="container mt-4">
   <form method="GET" class="search-bar">

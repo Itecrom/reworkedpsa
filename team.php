@@ -34,12 +34,11 @@ $categoryKeys = array_merge(
 include 'includes/header.php';
 ?>
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title-2.jpg);">
-    <div class="container text-center">
-        <h1 class="text-white font-weight-bold">Our Leadership and Team</h1>
-        <p class="text-white mb-0">Meet the people serving the Malawi Political Science Association.</p>
-    </div>
-</section>
+<?php renderPageTitle('Our Leadership and Team', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'Organisation Structure', 'url' => ''],
+], 'images/background/page-title-2.jpg', 'Meet the people serving the Malawi Political Science Association.'); ?>
 
 <section class="team-section section">
     <div class="container">

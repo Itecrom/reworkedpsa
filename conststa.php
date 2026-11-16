@@ -24,16 +24,11 @@ include 'includes/header.php';
 </div>
 <!-- /navigation --> 
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg);">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white font-weight-bold">PSA Constitution</h2>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
+<?php renderPageTitle('PSA Constitution', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'Constitution', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <!-- project single -->
 <section class="section">

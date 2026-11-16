@@ -71,16 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include 'includes/header.php';
 ?>
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg);">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white font-weight-bold">Contact the Association</h2>
-                <p class="text-white mb-0">We welcome questions, partnerships and research enquiries.</p>
-            </div>
-        </div>
-    </div>
-</section>
+<?php renderPageTitle('Contact the Association', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Contact Us', 'url' => ''],
+], 'images/background/page-title.jpg', 'We welcome questions, partnerships and research enquiries.'); ?>
 
 <section class="section contact-page">
     <div class="container">

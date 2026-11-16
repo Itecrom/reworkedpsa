@@ -1,8 +1,6 @@
 <?php 
 include 'includes/db.php';
 
-include 'includes/header.php';
-
 function resolveImagePath($image, $date) {
   if (!empty($image)) {
     // If image already contains a full path, use it as-is
@@ -48,16 +46,10 @@ if ($search) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
+$page_title = 'News and Events | Malawi Political Science Association';
+$meta_description = 'News, updates and announcements from the Malawi Political Science Association.';
+include 'includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>News - PSA Malawi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
 
   <style>
     .sidebar-box-shadow {
@@ -82,15 +74,11 @@ $result = $stmt->get_result();
       padding-left: 20px;
     }
   </style>
-</head>
-<body>
 
-<section class="page-title overlay" style="background-image: url('images/background/page-title.jpg'); background-size: cover; position: relative;">
-  <div style="background-color: rgba(0,0,0,0.6); position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
-  <div class="container text-center" style="position:relative; z-index:2;">
-    <h2 class="text-white font-weight-bold">News and Events</h2>
-  </div>
-</section>
+<?php renderPageTitle('News and Events', [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'News & Events', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <section class="section bg-light">
   <div class="container">
@@ -206,6 +194,3 @@ $result = $stmt->get_result();
 </section>
 
 <?php include 'includes/footer.php'; ?>
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-</body>
-</html>

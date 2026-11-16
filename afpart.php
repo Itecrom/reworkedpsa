@@ -7,16 +7,11 @@ include 'includes/meta.php';
 ?>
 
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title.jpg);">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white font-weight-bold">Affliates and Partners</h2>
-
-            </div>
-        </div>
-    </div>
-</section>
+<?php renderPageTitle('Affiliates and Partners', [
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'Affiliates and Partners', 'url' => ''],
+], 'images/background/page-title.jpg'); ?>
 
 <!-- Current Members -->
 <section class="section">

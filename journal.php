@@ -104,11 +104,11 @@ $years = $conn->query("SELECT DISTINCT YEAR(created_at) as yr FROM journals ORDE
 include 'includes/header.php';
 ?>
 
-<section class="page-title overlay" style="background-image: url(images/background/page-title-3.jpg);">
-  <div class="container"><div class="row"><div class="col-12 text-center">
-    <h2 class="text-white font-weight-bold">PSA Journals</h2>
-  </div></div></div>
-</section>
+<?php renderPageTitle('PSA Journals', [
+  ['label' => 'Home', 'url' => '/'],
+  ['label' => 'Publications', 'url' => ''],
+  ['label' => 'Journals', 'url' => ''],
+], 'images/background/page-title-3.jpg'); ?>
 
 <section class="section">
   <div class="container">
