@@ -227,6 +227,9 @@ startPublicFormSession();
                                 style="height: 150px;"></textarea>
                         </div>
                         <div class="col-12">
+                            <?= publicFormCaptchaField('contact', 'history-enquiry-captcha') ?>
+                        </div>
+                        <div class="col-12">
                             <button class="btn btn-primary" type="submit" value="send">Submit Request</button>
                         </div>
                     </form>
@@ -418,6 +421,7 @@ startPublicFormSession();
               <input type="text" class="form-control subscribe" name="name" id="history-newsletter-name" placeholder="Your Name" maxlength="255" required>
               <label class="sr-only" for="history-newsletter-email">Your email</label>
               <input type="email" class="form-control subscribe" name="email" id="history-newsletter-email" placeholder="Enter Your Email" maxlength="254" required>
+              <?= publicFormCaptchaField('newsletter', 'history-newsletter-captcha') ?>
               <button class="btn-subscribe btn btn-primary" type="submit" aria-label="Subscribe to PSA updates">
                 <i class="ti-arrow-right"></i>
               </button>

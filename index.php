@@ -19,6 +19,8 @@ include 'includes/header.php';
     <div class="alert alert-warning">Please wait a little before trying to subscribe again.</div>
   <?php elseif($_GET['sub']=="error"): ?>
     <div class="alert alert-danger">We could not save your subscription. Please try again later.</div>
+  <?php elseif($_GET['sub']=="captcha"): ?>
+    <div class="alert alert-warning">Please answer the newsletter security check correctly and try again.</div>
   <?php endif; ?>
 <?php endif; ?>
 

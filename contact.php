@@ -115,6 +115,8 @@ include 'includes/header.php';
                         <div class="alert alert-warning" role="status">Your message was saved, but we could not send an email notification. We will follow up as soon as possible.</div>
                     <?php elseif ($formStatus === 'error'): ?>
                         <div class="alert alert-danger" role="alert">We could not save your message. Please try again later or contact us by phone.</div>
+                    <?php elseif ($formStatus === 'captcha'): ?>
+                        <div class="alert alert-warning" role="alert">Please answer the security check correctly and try again.</div>
                     <?php elseif ($formStatus !== ''): ?>
                         <div class="alert alert-danger" role="alert">Please check your details and try submitting the form again.</div>
                     <?php endif; ?>
@@ -144,6 +146,9 @@ include 'includes/header.php';
                         <div class="col-12 form-group">
                             <label for="contact-message">Message <span aria-hidden="true">*</span></label>
                             <textarea id="contact-message" name="message" class="form-control p-2" maxlength="20000" required rows="6"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <?= publicFormCaptchaField('contact', 'contact-captcha') ?>
                         </div>
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Send message</button>

@@ -2531,6 +2531,13 @@ ul.tag-list li a:hover {
 .site-footer .newsletter-form .btn {
   min-height: 44px;
 }
+.site-footer .public-captcha {
+  color: #fff;
+  text-align: left;
+}
+.site-footer .public-captcha .form-control {
+  min-height: 42px;
+}
 .form-honeypot {
   position: absolute !important;
   left: -10000px !important;

@@ -87,6 +87,9 @@ include 'includes/header.php';
                                 style="height: 150px;"></textarea>
                         </div>
                         <div class="col-12">
+                            <?= publicFormCaptchaField('contact', 'membership-enquiry-captcha') ?>
+                        </div>
+                        <div class="col-12">
                             <button class="btn btn-primary" type="submit" value="send">Submit Request</button>
                         </div>
                     </form>

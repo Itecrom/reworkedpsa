@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $formError = validatePublicForm('newsletter');
 if ($formError !== '') {
-    header('Location: index.php?sub=' . ($formError === 'rate' ? 'rate' : 'invalid'), true, 303);
+    $status = $formError === 'rate' ? 'rate' : ($formError === 'captcha' ? 'captcha' : 'invalid');
+    header('Location: index.php?sub=' . $status, true, 303);
     exit;
 }
 

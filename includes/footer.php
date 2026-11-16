@@ -99,6 +99,7 @@
                 <label class="sr-only" for="newsletter-email">Your email</label>
                 <input id="newsletter-email" type="email" name="email" class="form-control" placeholder="Your Email" maxlength="254" required>
               </div>
+              <?= publicFormCaptchaField('newsletter', 'newsletter-captcha') ?>
               <button type="submit" class="btn btn-primary">Subscribe</button>
             </form>
 

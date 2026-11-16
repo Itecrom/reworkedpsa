@@ -24,6 +24,33 @@ function publicFormToken($formName) {
     return $_SESSION['public_form_tokens'][$formName];
 }
 
+function publicFormCaptchaQuestion($formName) {
+    startPublicFormSession();
+
+    $captcha = $_SESSION['public_form_captchas'][$formName] ?? null;
+    if (!$captcha || $captcha['expires_at'] < time()) {
+        $left = random_int(2, 9);
+        $right = random_int(1, 9);
+        $_SESSION['public_form_captchas'][$formName] = [
+            'question' => $left . ' + ' . $right,
+            'answer' => (string)($left + $right),
+            'expires_at' => time() + 1800,
+        ];
+    }
+
+    return $_SESSION['public_form_captchas'][$formName]['question'];
+}
+
+function publicFormCaptchaField($formName, $fieldId) {
+    $question = htmlspecialchars(publicFormCaptchaQuestion($formName), ENT_QUOTES, 'UTF-8');
+    $fieldId = htmlspecialchars($fieldId, ENT_QUOTES, 'UTF-8');
+
+    return '<div class="form-group public-captcha">'
+        . '<label for="' . $fieldId . '">Security check: what is ' . $question . '?</label>'
+        . '<input id="' . $fieldId . '" type="number" name="captcha_answer" class="form-control" inputmode="numeric" min="0" max="18" autocomplete="off" required>'
+        . '</div>';
+}
+
 function validatePublicForm($formName) {
     startPublicFormSession();
 
@@ -35,6 +62,17 @@ function validatePublicForm($formName) {
 
     if (!empty($_POST['website'])) {
         return 'spam';
+    }
+
+    $captcha = $_SESSION['public_form_captchas'][$formName] ?? null;
+    $captchaAnswer = trim((string)($_POST['captcha_answer'] ?? ''));
+    if (
+        !$captcha ||
+        $captcha['expires_at'] < time() ||
+        $captchaAnswer === '' ||
+        !hash_equals($captcha['answer'], $captchaAnswer)
+    ) {
+        return 'captcha';
     }
 
     $issuedAt = (int)($_SESSION['public_form_issued'][$formName] ?? 0);
@@ -55,7 +93,11 @@ function validatePublicForm($formName) {
 
     $recentSubmissions[] = $now;
     $_SESSION['public_form_submissions'][$formName] = array_values($recentSubmissions);
-    unset($_SESSION['public_form_tokens'][$formName], $_SESSION['public_form_issued'][$formName]);
+    unset(
+        $_SESSION['public_form_tokens'][$formName],
+        $_SESSION['public_form_issued'][$formName],
+        $_SESSION['public_form_captchas'][$formName]
+    );
 
     return '';
 }

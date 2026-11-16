@@ -419,6 +419,7 @@ startPublicFormSession();
               <input type="text" class="form-control subscribe" name="name" id="membership-newsletter-name" placeholder="Your Name" maxlength="255" required>
               <label class="sr-only" for="membership-newsletter-email">Your email</label>
               <input type="email" class="form-control subscribe" name="email" id="membership-newsletter-email" placeholder="Enter Your Email" maxlength="254" required>
+              <?= publicFormCaptchaField('newsletter', 'membership-newsletter-captcha') ?>
               <button class="btn-subscribe btn btn-primary" type="submit" aria-label="Subscribe to PSA updates">
                 <i class="ti-arrow-right"></i>
               </button>
