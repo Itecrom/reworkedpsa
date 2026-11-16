@@ -57,7 +57,7 @@ include 'includes/header.php';
                         <?php foreach ($membersByCategory[$category] as $member): ?>
                             <?php
                             $name = (string)($member['name'] ?? '');
-                            $image = basename((string)($member['image'] ?? ''));
+                            $image = basename(str_replace('\\', '/', (string)($member['image'] ?? '')));
                             $imagePath = $image !== '' ? 'uploads/team/' . rawurlencode($image) : '';
                             $email = trim((string)($member['email'] ?? ''));
                             ?>

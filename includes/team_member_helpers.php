@@ -16,6 +16,9 @@ function saveTeamMemberImage($file) {
     if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || empty($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
         throw new RuntimeException('The image upload did not complete successfully.');
     }
+    if (($file['size'] ?? 0) > 5 * 1024 * 1024) {
+        throw new RuntimeException('Team images must be 5 MB or smaller.');
+    }
 
     $mime = (new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']);
     $allowedTypes = [

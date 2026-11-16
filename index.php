@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 include 'includes/db.php';
 include 'includes/meta.php';
 include 'includes/header.php';
@@ -16,6 +13,10 @@ include 'includes/header.php';
     <div class="alert alert-danger">❌ Invalid email address.</div>
   <?php elseif($_GET['sub']=="empty"): ?>
     <div class="alert alert-danger">❌ Please enter both name and email.</div>
+  <?php elseif($_GET['sub']=="rate"): ?>
+    <div class="alert alert-warning">Please wait a little before trying to subscribe again.</div>
+  <?php elseif($_GET['sub']=="error"): ?>
+    <div class="alert alert-danger">We could not save your subscription. Please try again later.</div>
   <?php endif; ?>
 <?php endif; ?>
 

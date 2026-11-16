@@ -113,7 +113,7 @@ $result = $stmt->get_result();
             $image = resolveImagePath($row['image'], $row['date_posted'] ?? $row['created_at']);
           ?>
           <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card news-card h-100">
               <img src="<?= $image ?>" class="card-img-top" alt="<?= $title ?>">
               <div class="card-body">
                 <h5 class="card-title"><?= $title ?></h5>

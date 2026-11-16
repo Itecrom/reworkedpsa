@@ -45,12 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($values['name'] === '' || $values['position'] === '' || mb_strlen($values['name']) > 255 || mb_strlen($values['position']) > 255) {
             throw new RuntimeException('Enter a valid name and position (255 characters maximum).');
         }
+        $validCategories = ['Patron', 'Members of the Executive', 'Secretariat', 'Editorial Team', 'Other', 'executive', 'board', 'staff', 'other'];
+        if (!in_array($values['category'], $validCategories, true) && $values['category'] !== ($member['category'] ?? '')) {
+            throw new RuntimeException('Choose a valid team section.');
+        }
         if ($values['email'] !== '' && !filter_var($values['email'], FILTER_VALIDATE_EMAIL)) {
             throw new RuntimeException('Enter a valid email address.');
         }
 
         $columns = getTeamMemberColumns($conn);
         $newImage = saveTeamMemberImage($_FILES['image'] ?? []);
+        $uploadedImagePath = $newImage !== '' ? __DIR__ . '/../uploads/team/' . $newImage : '';
         if ($newImage !== '') {
             $values['image'] = $newImage;
         }
@@ -83,8 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = 'Team member updated successfully!';
         $member = $conn->query("SELECT * FROM team_members WHERE id = $id")->fetch_assoc();
     } catch (RuntimeException $e) {
+        if (!empty($uploadedImagePath) && is_file($uploadedImagePath)) {
+            @unlink($uploadedImagePath);
+        }
         $error = $e->getMessage();
     } catch (mysqli_sql_exception $e) {
+        if (!empty($uploadedImagePath) && is_file($uploadedImagePath)) {
+            @unlink($uploadedImagePath);
+        }
         error_log('Team member update failed: ' . $e->getMessage());
         $error = 'The team member could not be updated. Check the team table setup and try again.';
     }

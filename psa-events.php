@@ -113,9 +113,9 @@ LIMIT 5
 
 .event-card:hover {
 
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-4px);
 
-    box-shadow: 0 15px 40px rgba(0,0,0,.18);
+    box-shadow: 0 15px 34px rgba(30,52,39,.13);
 }
 
 .event-image-wrapper {
@@ -130,7 +130,7 @@ LIMIT 5
 
     justify-content: center;
 
-    min-height: 240px;
+    min-height: 230px;
 
     max-height: 400px;
 
@@ -143,11 +143,11 @@ LIMIT 5
 
     max-height: 400px;
 
-    object-fit: contain;
+    object-fit: cover;
 
     transition: transform .5s ease;
 
-    padding: 5px;
+    padding: 0;
 }
 
 .event-card:hover .event-image {
