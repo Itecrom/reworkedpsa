@@ -1,7 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin'])) header("Location: auth/login.php");
+if (!isset($_SESSION['admin'])) {
+    header("Location: auth/login.php");
+    exit;
+}
 include '../includes/db.php';
+include '../includes/audit_helper.php';
+include '../includes/team_member_helpers.php';
 
 $page_title = 'Edit Team Member - PSA Admin';
 
@@ -20,37 +25,64 @@ if (!$member) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $position = trim($_POST['position'] ?? '');
-    $category = trim($_POST['category'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $bio = trim($_POST['bio'] ?? '');
-    $facebook = trim($_POST['facebook'] ?? '');
-    $twitter = trim($_POST['twitter'] ?? '');
-    $linkedin = trim($_POST['linkedin'] ?? '');
-    $google = trim($_POST['google'] ?? '');
+    $values = [
+        'name' => trim((string)($_POST['name'] ?? '')),
+        'position' => trim((string)($_POST['position'] ?? '')),
+        'category' => trim((string)($_POST['category'] ?? 'Other')),
+        'email' => trim((string)($_POST['email'] ?? '')),
+        'phone' => trim((string)($_POST['phone'] ?? '')),
+        'bio' => trim((string)($_POST['bio'] ?? '')),
+        'facebook' => trim((string)($_POST['facebook'] ?? '')),
+        'twitter' => trim((string)($_POST['twitter'] ?? '')),
+        'linkedin' => trim((string)($_POST['linkedin'] ?? '')),
+        'google' => trim((string)($_POST['google'] ?? '')),
+    ];
 
-    $image = $member['image'];
-    if (!empty($_FILES['image']['name'])) {
-        $uploadDir = '../uploads/team/';
-        if (is_dir($uploadDir)) {
-            $image = time() . '_' . basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $image);
+    try {
+        if (!validateTeamFormToken()) {
+            throw new RuntimeException('Your form session expired. Please reload the page and try again.');
         }
-    }
+        if ($values['name'] === '' || $values['position'] === '' || mb_strlen($values['name']) > 255 || mb_strlen($values['position']) > 255) {
+            throw new RuntimeException('Enter a valid name and position (255 characters maximum).');
+        }
+        if ($values['email'] !== '' && !filter_var($values['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new RuntimeException('Enter a valid email address.');
+        }
 
-    $stmt = $conn->prepare("UPDATE team_members SET name=?, position=?, category=?, email=?, phone=?, bio=?, image=?, facebook=?, twitter=?, linkedin=?, google=? WHERE id=?");
-    $stmt->bind_param("sssssssssssi", $name, $position, $category, $email, $phone, $bio, $image, $facebook, $twitter, $linkedin, $google, $id);
+        $columns = getTeamMemberColumns($conn);
+        $newImage = saveTeamMemberImage($_FILES['image'] ?? []);
+        if ($newImage !== '') {
+            $values['image'] = $newImage;
+        }
+        $fields = array_values(array_intersect(array_keys($values), $columns));
+        if (!in_array('name', $fields, true) || !in_array('position', $fields, true)) {
+            throw new RuntimeException('The team member table is missing required columns.');
+        }
 
-    if ($stmt->execute()) {
-        $oldValues = ['name' => $member['name'], 'position' => $member['position']];
-        $newValues = ['name' => $name, 'position' => $position];
-        logAudit($conn, 'update', 'team_members', $id, $oldValues, $newValues);
-        $success = "Team member updated successfully!";
+        $updateValues = array_map(static function ($field) use ($values) {
+            return $values[$field];
+        }, $fields);
+        $sets = implode(', ', array_map(static function ($field) {
+            return $field . ' = ?';
+        }, $fields));
+        $stmt = $conn->prepare('UPDATE team_members SET ' . $sets . ' WHERE id = ?');
+        $params = array_merge($updateValues, [$id]);
+        $stmt->bind_param(str_repeat('s', count($updateValues)) . 'i', ...$params);
+        $stmt->execute();
+        $stmt->close();
+
+        logAudit($conn, 'update', 'team_members', $id, ['name' => $member['name'], 'position' => $member['position']], [
+            'name' => $values['name'],
+            'position' => $values['position'],
+            'category' => $values['category'],
+        ]);
+        $success = 'Team member updated successfully!';
         $member = $conn->query("SELECT * FROM team_members WHERE id = $id")->fetch_assoc();
-    } else {
-        $error = "Failed to update team member.";
+    } catch (RuntimeException $e) {
+        $error = $e->getMessage();
+    } catch (mysqli_sql_exception $e) {
+        error_log('Team member update failed: ' . $e->getMessage());
+        $error = 'The team member could not be updated. Check the team table setup and try again.';
     }
 }
 
