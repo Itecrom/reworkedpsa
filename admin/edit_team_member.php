@@ -71,11 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
 
-        logAudit($conn, 'update', 'team_members', $id, ['name' => $member['name'], 'position' => $member['position']], [
-            'name' => $values['name'],
-            'position' => $values['position'],
-            'category' => $values['category'],
-        ]);
+        try {
+            logAudit($conn, 'update', 'team_members', $id, ['name' => $member['name'], 'position' => $member['position']], [
+                'name' => $values['name'],
+                'position' => $values['position'],
+                'category' => $values['category'],
+            ]);
+        } catch (mysqli_sql_exception $e) {
+            error_log('Team member audit log failed: ' . $e->getMessage());
+        }
         $success = 'Team member updated successfully!';
         $member = $conn->query("SELECT * FROM team_members WHERE id = $id")->fetch_assoc();
     } catch (RuntimeException $e) {
@@ -120,6 +124,7 @@ include 'includes/admin_sidebar.php';
         <?php endif; ?>
 
         <form action="" method="post" enctype="multipart/form-data" class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(teamFormToken(), ENT_QUOTES, 'UTF-8') ?>">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="md:col-span-2">
                     <label class="block mb-1 font-semibold text-gray-700 dark:text-gray-300">Full Name <span class="text-red-500">*</span></label>
@@ -132,10 +137,26 @@ include 'includes/admin_sidebar.php';
                 <div>
                     <label class="block mb-1 font-semibold text-gray-700 dark:text-gray-300">Category</label>
                     <select name="category" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen">
-                        <option value="executive" <?= $member['category'] === 'executive' ? 'selected' : '' ?>>Executive</option>
-                        <option value="board" <?= $member['category'] === 'board' ? 'selected' : '' ?>>Board</option>
-                        <option value="staff" <?= $member['category'] === 'staff' ? 'selected' : '' ?>>Staff</option>
-                        <option value="other" <?= $member['category'] === 'other' ? 'selected' : '' ?>>Other</option>
+                        <?php
+                        $teamCategories = [
+                            'Patron' => 'Patron',
+                            'Members of the Executive' => 'Executive Committee',
+                            'Secretariat' => 'Secretariat',
+                            'Editorial Team' => 'Editorial Board',
+                            'Other' => 'Other',
+                            'executive' => 'Executive (legacy)',
+                            'board' => 'Board (legacy)',
+                            'staff' => 'Staff (legacy)',
+                            'other' => 'Other (legacy)',
+                        ];
+                        $currentCategory = $member['category'] ?? 'Other';
+                        if (!isset($teamCategories[$currentCategory])) {
+                            $teamCategories[$currentCategory] = $currentCategory;
+                        }
+                        foreach ($teamCategories as $categoryValue => $categoryLabel):
+                        ?>
+                            <option value="<?= htmlspecialchars($categoryValue, ENT_QUOTES, 'UTF-8') ?>" <?= $currentCategory === $categoryValue ? 'selected' : '' ?>><?= htmlspecialchars($categoryLabel, ENT_QUOTES, 'UTF-8') ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
@@ -168,7 +189,7 @@ include 'includes/admin_sidebar.php';
                 </div>
                 <div class="md:col-span-2">
                     <label class="block mb-1 font-semibold text-gray-700 dark:text-gray-300">Profile Image (leave blank to keep existing)</label>
-                    <input type="file" name="image" accept="image/*" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 rounded">
+                    <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 rounded">
                     <?php if (!empty($member['image'])): ?>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Current: <?= htmlspecialchars($member['image']) ?></p>
                     <?php endif; ?>
