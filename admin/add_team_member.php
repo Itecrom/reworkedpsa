@@ -70,12 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $success = 'Team member added successfully!';
         } catch (RuntimeException $e) {
             if ($image !== '') {
-                @unlink(__DIR__ . '/../uploads/team/' . basename($image));
+                removeTeamMemberImage($image);
             }
             $error = $e->getMessage();
         } catch (mysqli_sql_exception $e) {
             if ($image !== '') {
-                @unlink(__DIR__ . '/../uploads/team/' . basename($image));
+                removeTeamMemberImage($image);
             }
             error_log('Team member insert failed: ' . $e->getMessage());
             $error = 'The team member could not be saved. Check the team table setup and try again.';

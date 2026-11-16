@@ -27,7 +27,7 @@
               </li>
               <li class="list-inline-item">
                 <a class="social-icon-outline" href="https://instagram.com/malawipsa" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <i class="ti-vimeo-alt"></i>
+                  <i class="ti-instagram"></i>
                 </a>
               </li>
               <li class="list-inline-item">

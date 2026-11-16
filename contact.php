@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 . "From: PSA Malawi Website <no-reply@malawipsa.org>\r\n"
                 . 'Reply-To: ' . $email . "\r\n";
 
-            if (mail($recipient, 'Website contact: ' . $subject, $html, $headers)) {
+            if (function_exists('mail') && mail($recipient, 'Website contact: ' . $subject, $html, $headers)) {
                 $formStatus = 'success';
             } else {
                 error_log('Contact form email notification failed after the message was saved.');

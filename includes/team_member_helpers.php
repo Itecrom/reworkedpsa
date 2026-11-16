@@ -43,6 +43,13 @@ function saveTeamMemberImage($file) {
     return $filename;
 }
 
+function removeTeamMemberImage($filename) {
+    $path = __DIR__ . '/../uploads/team/' . basename((string)$filename);
+    if (is_file($path) && !unlink($path)) {
+        error_log('Unable to remove unused team image: ' . basename($path));
+    }
+}
+
 function teamFormToken() {
     if (empty($_SESSION['team_form_token'])) {
         $_SESSION['team_form_token'] = bin2hex(random_bytes(32));

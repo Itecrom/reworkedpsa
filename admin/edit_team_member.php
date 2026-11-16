@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'google' => trim((string)($_POST['google'] ?? '')),
     ];
 
+    $updated = false;
+    $uploadedImagePath = '';
     try {
         if (!validateTeamFormToken()) {
             throw new RuntimeException('Your form session expired. Please reload the page and try again.');
@@ -75,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param(str_repeat('s', count($updateValues)) . 'i', ...$params);
         $stmt->execute();
         $stmt->close();
+        $updated = true;
 
         try {
             logAudit($conn, 'update', 'team_members', $id, ['name' => $member['name'], 'position' => $member['position']], [
@@ -88,13 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = 'Team member updated successfully!';
         $member = $conn->query("SELECT * FROM team_members WHERE id = $id")->fetch_assoc();
     } catch (RuntimeException $e) {
-        if (!empty($uploadedImagePath) && is_file($uploadedImagePath)) {
-            @unlink($uploadedImagePath);
+        if (!$updated && $uploadedImagePath !== '') {
+            removeTeamMemberImage(basename($uploadedImagePath));
         }
         $error = $e->getMessage();
     } catch (mysqli_sql_exception $e) {
-        if (!empty($uploadedImagePath) && is_file($uploadedImagePath)) {
-            @unlink($uploadedImagePath);
+        if (!$updated && $uploadedImagePath !== '') {
+            removeTeamMemberImage(basename($uploadedImagePath));
         }
         error_log('Team member update failed: ' . $e->getMessage());
         $error = 'The team member could not be updated. Check the team table setup and try again.';

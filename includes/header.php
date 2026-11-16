@@ -216,10 +216,12 @@ try {
       <div class="ticker-wrap">
         <div class="ticker">
           <?php
-            $announcementMessage = $announcement['message'] ?? '2026 PSA Biennial Conference: follow the latest news and announcements.';
+            $announcementMessage = !empty($announcement['message'])
+                ? $announcement['message']
+                : '2026 PSA Biennial Conference: follow the latest news and announcements.';
             $announcementLink = trim($announcement['link_url'] ?? '');
             $announcementScheme = strtolower((string)parse_url($announcementLink, PHP_URL_SCHEME));
-            $safeAnnouncementLink = ($announcementLink !== '' && in_array($announcementScheme, ['', 'http', 'https'], true))
+            $safeAnnouncementLink = ($announcementLink !== '' && strpos($announcementLink, '//') !== 0 && in_array($announcementScheme, ['', 'http', 'https'], true))
                 ? $announcementLink
                 : '';
           ?>
