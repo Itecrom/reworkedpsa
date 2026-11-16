@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($values['name'] === '' || $values['position'] === '' || mb_strlen($values['name']) > 255 || mb_strlen($values['position']) > 255) {
             throw new RuntimeException('Enter a valid name and position (255 characters maximum).');
         }
-        $validCategories = ['Patron', 'Members of the Executive', 'Secretariat', 'Editorial Team', 'Other', 'executive', 'board', 'staff', 'other'];
+        $validCategories = ['Patron', 'Members of the Executive', 'Secretariat', 'Secretariate', 'Editorial Team', 'Other', 'executive', 'board', 'staff', 'other'];
         if (!in_array($values['category'], $validCategories, true) && $values['category'] !== ($member['category'] ?? '')) {
             throw new RuntimeException('Choose a valid team section.');
         }
@@ -155,7 +155,7 @@ include 'includes/admin_sidebar.php';
                         $teamCategories = [
                             'Patron' => 'Patron',
                             'Members of the Executive' => 'Executive Committee',
-                            'Secretariat' => 'Secretariat',
+                            'Secretariate' => 'Secretariat',
                             'Editorial Team' => 'Editorial Board',
                             'Other' => 'Other',
                             'executive' => 'Executive (legacy)',

@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+require_once 'includes/public_form_security.php';
+startPublicFormSession();
 ?>
 
 <?php
@@ -78,8 +78,8 @@ error_reporting(E_ALL);
     <div class="navigation">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="home.php">
-                    <img src="images/logo.png" alt="PSA logo">
+                <a class="navbar-brand psa-brand" href="psa.php" aria-label="Malawi Political Science Association home">
+                    <img src="images/logo.png" alt="Malawi Political Science Association logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -205,7 +205,12 @@ error_reporting(E_ALL);
                 <!-- Consultation -->
                 <div class="mb-50">
                     <h5 class="mb-20">Become a Member</h5>
-                    <form action="memberreg.php" class="row">
+                    <form action="contact.php" method="post" class="row">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(publicFormToken('contact'), ENT_QUOTES, 'UTF-8') ?>">
+                        <div class="form-honeypot" aria-hidden="true">
+                            <label for="history-enquiry-website">Leave this field empty</label>
+                            <input id="history-enquiry-website" type="text" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="col-12">
                             <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
                         </div>
@@ -218,7 +223,7 @@ error_reporting(E_ALL);
                                 required>
                         </div>
                         <div class="col-12">
-                            <textarea name="question" id="question" class="form-control p-2" placeholder="Your Question Here..."
+                            <textarea name="message" id="question" class="form-control p-2" placeholder="Your Question Here..."
                                 style="height: 150px;"></textarea>
                         </div>
                         <div class="col-12">
@@ -319,7 +324,7 @@ error_reporting(E_ALL);
 
 
 <!-- footer -->
-<footer class="bg-secondary">
+<footer class="site-footer bg-secondary">
   <div class="py-100 border-bottom" style="border-color: green !important">
     <div class="container">
       <div class="row">
@@ -403,10 +408,17 @@ error_reporting(E_ALL);
           <div class="mt-5 mt-lg-0 text-center text-md-left">
             <h4 class="mb-4 text-white">Subscribe Us</h4>
             <p class="text-white mb-4">Receive our Newsletters, Opportunities, Events and latest news </p>
-            <form action="#" class="position-relative">
-              <input type="text" class="form-control subscribe" name="subscribe" id="Subscribe"
-                placeholder="Enter Your Email">
-              <button class="btn-subscribe" type="submit" value="send">
+            <form action="subscribe.php" method="post" class="position-relative newsletter-form">
+              <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(publicFormToken('newsletter'), ENT_QUOTES, 'UTF-8') ?>">
+              <div class="form-honeypot" aria-hidden="true">
+                <label for="history-newsletter-website">Leave this field empty</label>
+                <input id="history-newsletter-website" type="text" name="website" tabindex="-1" autocomplete="off">
+              </div>
+              <label class="sr-only" for="history-newsletter-name">Your name</label>
+              <input type="text" class="form-control subscribe" name="name" id="history-newsletter-name" placeholder="Your Name" maxlength="255" required>
+              <label class="sr-only" for="history-newsletter-email">Your email</label>
+              <input type="email" class="form-control subscribe" name="email" id="history-newsletter-email" placeholder="Enter Your Email" maxlength="254" required>
+              <button class="btn-subscribe btn btn-primary" type="submit" aria-label="Subscribe to PSA updates">
                 <i class="ti-arrow-right"></i>
               </button>
             </form>

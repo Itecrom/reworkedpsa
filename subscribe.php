@@ -30,9 +30,9 @@ if (mb_strlen($name) > 255 || mb_strlen($email) > 254 || !filter_var($email, FIL
 include 'includes/ensure_subscribers.php';
 ensureSubscribersTable($conn);
 
-// Check duplicates
-$stmt = $conn->prepare("SELECT id FROM subscribers WHERE email = ?");
 $email = mb_strtolower($email);
+// Normalize before checking so differently-cased submissions match existing records.
+$stmt = $conn->prepare("SELECT id FROM subscribers WHERE LOWER(email) = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();

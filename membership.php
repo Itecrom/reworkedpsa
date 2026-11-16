@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/public_form_security.php';
+startPublicFormSession();
 ?>
 
 <?php

@@ -1,4 +1,6 @@
 <?php
+require_once 'includes/public_form_security.php';
+startPublicFormSession();
 include 'includes/db.php';
 include 'includes/meta.php';
 include 'includes/header.php';

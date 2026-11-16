@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/public_form_security.php';
+startPublicFormSession();
 
 // Get quick announcement from database (use the main config: includes/db.php)
 require_once __DIR__ . '/db.php';

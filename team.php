@@ -8,6 +8,7 @@ $categoryLabels = [
     'Members of the Executive' => 'Executive Committee',
     'Editorial Team' => 'Editorial Board',
     'Secretariat' => 'Secretariat',
+    'Secretariate' => 'Secretariat',
     'executive' => 'Executive Committee',
     'board' => 'Board',
     'staff' => 'Secretariat',
@@ -22,7 +23,7 @@ while ($member = $result->fetch_assoc()) {
     $membersByCategory[$category][] = $member;
 }
 
-$orderedCategories = ['Patron', 'Members of the Executive', 'executive', 'board', 'Editorial Team', 'Secretariat', 'staff', 'Other', 'other'];
+$orderedCategories = ['Patron', 'Members of the Executive', 'executive', 'board', 'Editorial Team', 'Secretariat', 'Secretariate', 'staff', 'Other', 'other'];
 $categoryKeys = array_merge(
     array_values(array_filter($orderedCategories, static function ($category) use ($membersByCategory) {
         return isset($membersByCategory[$category]);

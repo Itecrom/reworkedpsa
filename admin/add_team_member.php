@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Your form session expired. Please reload the page and try again.';
     } elseif ($name === '' || $position === '' || mb_strlen($name) > 255 || mb_strlen($position) > 255) {
         $error = 'Enter a valid name and position (255 characters maximum).';
-    } elseif (!in_array($category, ['Patron', 'Members of the Executive', 'Secretariat', 'Editorial Team', 'Other'], true)) {
+    } elseif (!in_array($category, ['Patron', 'Members of the Executive', 'Secretariate', 'Editorial Team', 'Other'], true)) {
         $error = 'Choose a valid team section.';
     } elseif ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Enter a valid email address.';
@@ -132,7 +132,7 @@ include 'includes/admin_sidebar.php';
                     <select name="category" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen">
                         <option value="Patron">Patron</option>
                         <option value="Members of the Executive">Executive Committee</option>
-                        <option value="Secretariat">Secretariat</option>
+                        <option value="Secretariate">Secretariat</option>
                         <option value="Editorial Team">Editorial Board</option>
                         <option value="Other">Other</option>
                     </select>
