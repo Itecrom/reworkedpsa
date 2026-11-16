@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 include 'includes/header.php';
 ?>
 
@@ -68,7 +65,12 @@ include 'includes/header.php';
                 <!-- Consultation -->
                 <div class="mb-50">
                     <h5 class="mb-20">Become a Member</h5>
-                    <form action="memberreg.php" class="row">
+                    <form action="contact.php" method="post" class="row">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(publicFormToken('contact'), ENT_QUOTES, 'UTF-8') ?>">
+                        <div class="form-honeypot" aria-hidden="true">
+                            <label for="member-enquiry-website">Leave this field empty</label>
+                            <input id="member-enquiry-website" type="text" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="col-12">
                             <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
                         </div>
@@ -81,7 +83,7 @@ include 'includes/header.php';
                                 required>
                         </div>
                         <div class="col-12">
-                            <textarea name="question" id="question" class="form-control p-2" placeholder="Your Question Here..."
+                            <textarea name="message" id="question" class="form-control p-2" placeholder="Your Question Here..."
                                 style="height: 150px;"></textarea>
                         </div>
                         <div class="col-12">

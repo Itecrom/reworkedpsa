@@ -1,9 +1,20 @@
 <?php
 
-function publicFormToken($formName) {
+function startPublicFormSession() {
     if (session_status() !== PHP_SESSION_ACTIVE) {
+        ini_set('session.use_strict_mode', '1');
+        ini_set('session.use_only_cookies', '1');
+        ini_set('session.cookie_httponly', '1');
+        ini_set('session.cookie_samesite', 'Lax');
+        if (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') {
+            ini_set('session.cookie_secure', '1');
+        }
         session_start();
     }
+}
+
+function publicFormToken($formName) {
+    startPublicFormSession();
 
     if (empty($_SESSION['public_form_tokens'][$formName])) {
         $_SESSION['public_form_tokens'][$formName] = bin2hex(random_bytes(32));
@@ -14,9 +25,7 @@ function publicFormToken($formName) {
 }
 
 function validatePublicForm($formName) {
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        session_start();
-    }
+    startPublicFormSession();
 
     $submittedToken = $_POST['csrf_token'] ?? '';
     $expectedToken = $_SESSION['public_form_tokens'][$formName] ?? '';

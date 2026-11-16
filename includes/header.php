@@ -86,12 +86,12 @@ try {
 
 .news-ticker::before {
   left: 0;
-  background: linear-gradient(to right, #000 0%, transparent 100%);
+  background: linear-gradient(to right, #123b2a 0%, transparent 100%);
 }
 
 .news-ticker::after {
   right: 0;
-  background: linear-gradient(to left, #000 0%, transparent 100%);
+  background: linear-gradient(to left, #123b2a 0%, transparent 100%);
 }
 
 .ticker-wrap {

@@ -38,7 +38,7 @@ $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows > 0) {
     $stmt->close();
-    header("Location: index.php?sub=exists");
+    header("Location: index.php?sub=exists", true, 303);
     exit;
 }
 $stmt->close();
@@ -52,11 +52,11 @@ $placeholders = [];
 $types = '';
 $values = [];
 
-if (in_array('name', $existing))       { $fields[] = 'name';       $placeholders[] = '?'; $types .= 's'; $values[] = $name; }
-if (in_array('email', $existing))      { $fields[] = 'email';      $placeholders[] = '?'; $types .= 's'; $values[] = $email; }
-if (in_array('status', $existing))     { $fields[] = 'status';     $placeholders[] = '?'; $types .= 's'; $values[] = 'pending'; }
-if (in_array('approved', $existing))   { $fields[] = 'approved';   $placeholders[] = '?'; $types .= 'i'; $values[] = 0; }
-if (in_array('created_at', $existing)) { $fields[] = 'created_at'; $placeholders[] = '?'; $types .= 's'; $values[] = date('Y-m-d H:i:s'); }
+if (in_array('name', $existing, true))       { $fields[] = 'name';       $placeholders[] = '?'; $types .= 's'; $values[] = $name; }
+if (in_array('email', $existing, true))      { $fields[] = 'email';      $placeholders[] = '?'; $types .= 's'; $values[] = $email; }
+if (in_array('status', $existing, true))     { $fields[] = 'status';     $placeholders[] = '?'; $types .= 's'; $values[] = 'pending'; }
+if (in_array('approved', $existing, true))   { $fields[] = 'approved';   $placeholders[] = '?'; $types .= 'i'; $values[] = 0; }
+if (in_array('created_at', $existing, true)) { $fields[] = 'created_at'; $placeholders[] = '?'; $types .= 's'; $values[] = date('Y-m-d H:i:s'); }
 
 if (!in_array('email', $existing, true) || !in_array('name', $existing, true)) {
     error_log('Subscribe failed: subscribers table has no usable columns');
@@ -75,6 +75,11 @@ $stmt->bind_param($types, ...$values);
 try {
     $inserted = $stmt->execute();
 } catch (mysqli_sql_exception $e) {
+    if ((int)$e->getCode() === 1062) {
+        $stmt->close();
+        header("Location: index.php?sub=exists", true, 303);
+        exit;
+    }
     error_log('Subscribe insert failed: ' . $e->getMessage());
     header("Location: index.php?sub=error", true, 303);
     exit;

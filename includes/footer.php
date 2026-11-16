@@ -1,6 +1,6 @@
 <!-- footer -->
 <footer class="site-footer bg-secondary">
-  <div class="py-100 border-bottom" style="border-color: green !important">
+  <div class="py-100 border-bottom" style="border-color: rgba(255,255,255,.14) !important">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
@@ -113,7 +113,7 @@
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            <span class="text-primary">Malawi PSA</span> &copy; <?php echo date('Y'); ?> All Right Reserved | Powered by <a href="https://leonardjjmhone.gt.tc/?i=1" target="_blank" class="text-primary">ITEC</a></p>
+            <span class="text-primary">Malawi PSA</span> &copy; <?php echo date('Y'); ?> All Right Reserved | Powered by <a href="https://leonardjjmhone.gt.tc/?i=1" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a></p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">
