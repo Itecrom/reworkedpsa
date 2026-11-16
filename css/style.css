@@ -2449,3 +2449,330 @@ ul.tag-list li a:hover {
   outline: 0;
 }
 /*# sourceMappingURL=maps/style.css.map */
+
+/* PSA layout refinements */
+.top-header {
+  background: #123b2a;
+}
+.news-ticker::before {
+  background: linear-gradient(to right, #123b2a 0%, transparent 100%);
+}
+.news-ticker::after {
+  background: linear-gradient(to left, #123b2a 0%, transparent 100%);
+}
+.ticker-message {
+  display: inline-block;
+  padding: 0 42px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.psa-brand {
+  display: flex;
+  align-items: center;
+  min-height: 82px;
+  margin-right: 24px;
+}
+.psa-brand img {
+  display: block;
+  width: auto;
+  max-width: min(250px, 42vw);
+  max-height: 68px;
+  object-fit: contain;
+}
+.navigation .navbar {
+  min-height: 92px;
+  background: #fff !important;
+}
+.navigation .nav-link {
+  color: #263b32;
+  font-weight: 600;
+  padding-left: .8rem !important;
+  padding-right: .8rem !important;
+}
+.navigation .nav-link:hover,
+.navigation .nav-link:focus {
+  color: #198754;
+}
+.site-footer {
+  color: rgba(255, 255, 255, .8);
+}
+.site-footer > .py-100 {
+  padding-top: 76px;
+  padding-bottom: 60px;
+}
+.site-footer .footer-logo {
+  width: auto;
+  max-width: 220px;
+  max-height: 72px;
+  object-fit: contain;
+}
+.site-footer .footer-links li {
+  margin-bottom: 11px;
+}
+.site-footer .footer-links a,
+.site-footer .social-icon-outline {
+  transition: color .2s ease, transform .2s ease;
+}
+.site-footer .footer-links a:hover,
+.site-footer .social-icon-outline:hover {
+  color: #f3c969;
+}
+.site-footer .newsletter-form .form-control {
+  min-height: 46px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+.site-footer .newsletter-form .form-control::placeholder {
+  color: rgba(255, 255, 255, .68);
+}
+.site-footer .newsletter-form .btn {
+  min-height: 44px;
+}
+.form-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+.team-section {
+  background: #f6f8f7;
+}
+.team-section-heading {
+  margin-bottom: 26px;
+}
+.team-category-title {
+  margin: 4px 0 0;
+  color: #173c2b;
+  font-size: 28px;
+  font-weight: 700;
+}
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 24px;
+  border: 1px solid #e6ece8;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(24, 55, 39, .06);
+  text-align: center;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(24, 55, 39, .12);
+}
+.team-avatar {
+  width: 126px;
+  height: 126px;
+  margin-bottom: 18px;
+  border: 4px solid #edf4ef;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.team-avatar-placeholder {
+  display: grid;
+  place-items: center;
+  background: #e8f1eb;
+  color: #17613c;
+  font-size: 42px;
+  font-weight: 700;
+}
+.team-card h3 {
+  margin: 0 0 5px;
+  color: #20362a;
+  font-size: 19px;
+  font-weight: 700;
+}
+.team-position {
+  margin-bottom: 12px;
+  color: #1d7a4b;
+  font-weight: 600;
+}
+.team-bio {
+  color: #65736b;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.team-social {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+.team-social a {
+  color: #315a43;
+  font-size: 17px;
+}
+.team-social a:hover {
+  color: #198754;
+}
+
+.contact-information,
+.contact-form-card {
+  padding: 36px;
+  border: 1px solid #e8eeea;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(27, 55, 39, .07);
+}
+.contact-detail {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 26px;
+}
+.contact-detail .round-icon {
+  flex: 0 0 auto;
+}
+.contact-detail strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #21382b;
+}
+.contact-detail p,
+.contact-detail a {
+  color: #68756e;
+  line-height: 1.7;
+}
+.contact-form-card label {
+  color: #354a3c;
+  font-size: 14px;
+  font-weight: 600;
+}
+.contact-form-card .form-control {
+  min-height: 48px;
+  border-color: #dce5df;
+  border-radius: 6px;
+}
+.contact-form-card textarea.form-control {
+  min-height: 150px;
+}
+.contact-form-card .form-control:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 .2rem rgba(25, 135, 84, .12);
+}
+.contact-map iframe {
+  display: block;
+}
+
+.journal-volume {
+  overflow: hidden;
+  border: 1px solid #e3ebe5;
+  box-shadow: 0 8px 26px rgba(24, 55, 39, .06);
+}
+.journal-volume-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  list-style: none;
+}
+.journal-volume-summary::-webkit-details-marker {
+  display: none;
+}
+.journal-volume-summary::marker {
+  content: "";
+}
+.journal-volume[open] .journal-volume-summary {
+  border-bottom: 1px solid #e8eeea;
+  background: #f7faf8;
+}
+.journal-volume-icon {
+  display: grid;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8f3ec;
+  color: #17613c;
+  font-size: 20px;
+}
+.journal-volume-heading {
+  flex: 1;
+  min-width: 0;
+}
+.journal-volume-title {
+  display: block;
+  margin-bottom: 4px;
+  color: #203a2b;
+  font-size: 18px;
+  font-weight: 700;
+}
+.journal-volume-toggle {
+  color: #17613c;
+  transition: transform .2s ease;
+}
+.journal-volume[open] .journal-volume-toggle {
+  transform: rotate(180deg);
+}
+.journal-volume-content {
+  background: #fff;
+}
+.journal-volume-content .bg-light {
+  border: 1px solid #edf1ee;
+}
+
+.news-card,
+.event-card {
+  border: 1px solid #e7ece8;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(30, 52, 39, .07);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.news-card:hover,
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 34px rgba(30, 52, 39, .13);
+}
+.news-card .card-img-top {
+  border-radius: 12px 12px 0 0;
+}
+.news-card .card-title,
+.event-card h4 {
+  color: #203a2b;
+  font-weight: 700;
+}
+.news-card .card-body,
+.event-card .p-4 {
+  line-height: 1.65;
+}
+.event-image-wrapper {
+  min-height: 230px;
+}
+.event-image {
+  object-fit: cover;
+  padding: 0;
+}
+
+@media (max-width: 767.98px) {
+  .psa-brand {
+    min-height: 64px;
+    margin-right: 8px;
+  }
+  .psa-brand img {
+    max-height: 54px;
+    max-width: 190px;
+  }
+  .navigation .navbar {
+    min-height: 70px;
+  }
+  .site-footer > .py-100 {
+    padding-top: 52px;
+    padding-bottom: 40px;
+  }
+  .contact-information,
+  .contact-form-card {
+    padding: 25px 20px;
+  }
+  .journal-volume-summary {
+    padding: 17px 16px;
+  }
+}

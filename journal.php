@@ -144,25 +144,28 @@ include 'includes/header.php';
 
         <div id="journal-list">
           <?php while($j = $journals->fetch_assoc()): ?>
-            <div class="bg-white rounded shadow-sm mb-4 p-4 wow fadeIn" data-wow-delay="0.1s">
-              <div class="d-flex align-items-center mb-2">
-                <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" width="34" class="mr-3" alt="PDF">
-                <div>
-                  <h5 class="mb-0"><?= htmlspecialchars($j['title']) ?></h5>
-                  <small class="text-muted">
-                    <!--By--> <?= htmlspecialchars($j['author'] ?? 'Unknown') ?>
-                    Vol. <?= htmlspecialchars($j['volume'] ?? 'N/A') ?>, Issue <?= htmlspecialchars($j['issue_no'] ?? 'N/A') ?>
-                    | <?= date('M d, Y', strtotime($j['journal_date'] ?? $j['created_at'])) ?>
+            <details class="journal-volume bg-white rounded shadow-sm mb-4 wow fadeIn">
+              <summary class="journal-volume-summary">
+                <span class="journal-volume-icon" aria-hidden="true"><i class="ti-book"></i></span>
+                <span class="journal-volume-heading">
+                  <span class="journal-volume-title"><?= htmlspecialchars($j['title']) ?></span>
+                  <small class="text-muted d-block">
+                    <?= htmlspecialchars($j['author'] ?? 'Unknown') ?>
+                    · Vol. <?= htmlspecialchars($j['volume'] ?? 'N/A') ?>, Issue <?= htmlspecialchars($j['issue_no'] ?? 'N/A') ?>
+                    · <?= date('M d, Y', strtotime($j['journal_date'] ?? $j['created_at'])) ?>
+                    · <?= (int)$j['article_count'] ?> articles
                   </small>
-                  <?php if (!empty($j['tags'])): ?>
-                    <div class="mt-1">
-                      <?php foreach (explode(',', $j['tags']) as $tag): ?>
-                        <span class="badge badge-primary mr-1"><?= htmlspecialchars(trim($tag)) ?></span>
-                      <?php endforeach; ?>
-                    </div>
-                  <?php endif; ?>
+                </span>
+                <span class="journal-volume-toggle" aria-hidden="true"><i class="ti-angle-down"></i></span>
+              </summary>
+              <div class="journal-volume-content p-4">
+              <?php if (!empty($j['tags'])): ?>
+                <div class="mb-3">
+                  <?php foreach (explode(',', $j['tags']) as $tag): ?>
+                    <span class="badge badge-primary mr-1"><?= htmlspecialchars(trim($tag)) ?></span>
+                  <?php endforeach; ?>
                 </div>
-              </div>
+              <?php endif; ?>
               <p class="text-justify"><?= nl2br(htmlspecialchars(mb_strimwidth($j['summary'], 0, 300, "..."))) ?></p>
 
               <?php
@@ -218,7 +221,8 @@ include 'includes/header.php';
               <?php else: ?>
                 <span class="text-danger">[No Full Journal PDF]</span>
               <?php endif; ?>
-            </div>
+              </div>
+            </details>
           <?php endwhile; ?>
         </div>
 
