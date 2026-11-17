@@ -44,7 +44,7 @@ include 'includes/header.php';
 				Notwithstanding this, PSA has the “power of adopting resolutions or taking such other actions as it deems 
 				appropriate in support of academic freedom, and other freedoms by and within the Association and the political 
 				profession when in its judgement such freedoms have been clearly violated or threatened” .</p>
-                <a href="" class="btn btn-primary">Explore More</a>
+                <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="btn btn-primary">Explore More</a>
 			</div>				
         </div>
    </div>
@@ -192,18 +192,18 @@ include 'includes/header.php';
 <section class="bg-gray py-4">
     <div class="container">
         <div class="client-logo-slider align-self-center">
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6.png" alt="client-logo"></a>			
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6.png" alt="client-logo"></a>
         </div>
     </div>
 </section>

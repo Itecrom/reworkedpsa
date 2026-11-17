@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/public_form_security.php';
 require_once 'includes/page_title.php';
+require_once 'includes/path_helper.php';
 startPublicFormSession();
 ?>
 
@@ -121,7 +122,7 @@ startPublicFormSession();
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  role="button" data-toggle="dropdown" aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 News & Events
                             </a>
@@ -136,21 +137,21 @@ startPublicFormSession();
                               Research  
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="">Overview</a>
-                                <a class="dropdown-item" href="">Research</a>
-                                <a class="dropdown-item" href="">Consultancy</a>
-                                <a class="dropdown-item" href="">Training</a>                              
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Overview</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Research</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Consultancy</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Training</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 Publications
                             </a>
                             <div class="dropdown-menu" >
                                 <a class="dropdown-item" href="journal.php">Journal Articles</a>
-                                <a class="dropdown-item" href="">Books</a>
-                                <a class="dropdown-item" href="">Policy Papers</a>                          
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Books</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Policy Papers</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -191,7 +192,7 @@ startPublicFormSession();
                         <li class="py-3 border-bottom">
                             <span class="d-inline-block" style="width: 140px;">Date:</span>April, 2017</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Watch Launch Event</a>
+                    <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="btn btn-primary">Watch Launch Event</a>
                 </div>
                 <!-- case study -->
                 <div class="rounded bg-gray border py-3 px-4 mb-50">
@@ -306,16 +307,16 @@ startPublicFormSession();
 <section class="bg-primary py-4">
     <div class="container">
         <div class="client-logo-slider align-self-center">
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
-			<a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
+			<a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
+            <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
 		</div>
     </div>
 </section>
@@ -337,22 +338,22 @@ startPublicFormSession();
             <!-- social icon -->
             <ul class="list-inline">
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="">
+                <a class="social-icon-outline" href="https://facebook.com/psamw" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <i class="ti-facebook"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="https://x.com/psa_mw" target="_blank" rel="noopener noreferrer" aria-label="X">
                   <i class="ti-twitter-alt"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" aria-label="Vimeo">
                   <i class="ti-vimeo-alt"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="social-icon-outline" href="#">
+                <a class="social-icon-outline" href="https://linkedin.com/company/political-science-association-mw" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <i class="ti-linkedin"></i>
                 </a>
               </li>
@@ -364,7 +365,7 @@ startPublicFormSession();
           <h4 class="text-white mb-4">What we do</h4>
           <ul class="footer-links">
             <li>
-              <a href="#">Research</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Research</a>
             </li>
             <li>
               <a href="about.php">Publications</a>
@@ -376,7 +377,7 @@ startPublicFormSession();
               <a href="/">Academics</a>
             </li>
             <li>
-              <a href="#">Political News</a>
+              <a href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Political News</a>
             </li>
           </ul>
         </div>
@@ -385,7 +386,7 @@ startPublicFormSession();
           <h4 class="text-white mb-4">Quick Links</h4>
           <ul class="footer-links">
             <li>
-              <a href="#">Our History</a>
+              <a href="<?= htmlspecialchars(sitePath('psa-history'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Our History</a>
             </li>
             <li>
               <a href="/">About Us</a>
@@ -397,7 +398,7 @@ startPublicFormSession();
               <a href="/">Service</a>
             </li>
             <li>
-              <a href="#">Privacy Policy</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Privacy Policy</a>
             </li>
           </ul>
         </div>
@@ -432,23 +433,22 @@ startPublicFormSession();
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            <span class="text-primary">Malawi PSA</span> &copy; <?= date('Y') ?> All Right Reserved |
-            Developed by <a href="https://leonardjjmhone.gt.tc/?i=1" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone</a>,
-            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a></p>
+            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone (lm.itecictsolutions.com)</a>,
+            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC (itecictsolutions.com)</a></p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
-              <a class="font-secondary text-white" href="#">Register</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('auth/register'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Register</a>
             </li>
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
-              <a class="font-secondary text-white" href="#">Legal</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Legal</a>
             </li>
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
               <a class="font-secondary text-white" href="psa.php">Faq</a>
             </li>
             <li class="list-inline-item ml-lg-3 my-lg-0 ml-2 my-2 ml-0">
-              <a class="font-secondary text-white" href="#">Terms &amp; Conditions</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Terms &amp; Conditions</a>
             </li>
           </ul>
         </div>

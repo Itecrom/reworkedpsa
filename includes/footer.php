@@ -46,13 +46,13 @@
               <a href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Journals</a>
             </li>
             <li>
-              <a href="">Publications</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Publications</a>
             </li>
             <li>
-              <a href="">Trainings</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Trainings</a>
             </li>
             <li>
-              <a href="">Academics</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Academics</a>
             </li>
             <li>
               <a href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">News</a>
@@ -76,7 +76,7 @@
               <a href="<?= htmlspecialchars(sitePath('afpart'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Partners</a>
             </li>
             <li>
-              <a href="#">Privacy Policy</a>
+              <a href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Privacy Policy</a>
             </li>
           </ul>
         </div>
@@ -114,24 +114,23 @@
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            <span class="text-primary">Malawi PSA</span> &copy; <?php echo date('Y'); ?> All Right Reserved |
-            Developed by <a href="https://leonardjjmhone.gt.tc/?i=1" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone</a>,
-            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a>
+            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone (lm.itecictsolutions.com)</a>,
+            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC (itecictsolutions.com)</a>
           </p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
-              <a class="font-secondary text-white" href="#">Register</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('auth/register'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Register</a>
             </li>
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
-              <a class="font-secondary text-white" href="#">Legal</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Legal</a>
             </li>
             <li class="list-inline-item mx-lg-3 my-lg-0 mx-2 my-2">
-              <a class="font-secondary text-white" href="">Faq</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Faq</a>
             </li>
             <li class="list-inline-item ml-lg-3 my-lg-0 ml-2 my-2 ml-0">
-              <a class="font-secondary text-white" href="#">Terms &amp; Conditions</a>
+              <a class="font-secondary text-white" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Terms &amp; Conditions</a>
             </li>
           </ul>
         </div>

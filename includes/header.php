@@ -420,7 +420,7 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"  role="button" data-toggle="dropdown" aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 News & Events
                             </a>
@@ -435,21 +435,21 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                               Research  
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="">Overview</a>
-                                <a class="dropdown-item" href="">Research</a>
-                                <a class="dropdown-item" href="">Consultancy</a>
-                                <a class="dropdown-item" href="">Training</a>                              
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Overview</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Research</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Consultancy</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Training</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            <a class="nav-link dropdown-toggle" href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 Publications
                             </a>
                             <div class="dropdown-menu" >
                                 <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Journal Articles</a>
-                                <a class="dropdown-item" href="">Books</a>
-                                <a class="dropdown-item" href="">Policy Papers</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Books</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('maintenance'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Policy Papers</a>
                             </div>
                         </li>
                         <li class="nav-item">
