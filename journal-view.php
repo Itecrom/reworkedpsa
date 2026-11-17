@@ -158,7 +158,7 @@ $topics = $conn->query("SELECT * FROM journal_topics WHERE journal_id = " . $jou
           $recent = $conn->query("SELECT title, slug, created_at FROM journals ORDER BY created_at DESC LIMIT 5");
           while ($r = $recent->fetch_assoc()): ?>
             <div class="mb-3 border-bottom pb-2">
-              <a href="/journal-view?id=<?= (int)$r['id'] ?>" class="text-dark font-weight-bold">
+              <a href="<?= htmlspecialchars(sitePath('journal-view?id=' . (int)$r['id']), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-dark font-weight-bold">
                 <?= htmlspecialchars($r['title']) ?>
               </a>
               <div class="small text-muted"><?= date('M d, Y', strtotime($r['created_at'])) ?></div>

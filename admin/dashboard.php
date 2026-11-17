@@ -130,8 +130,8 @@ include 'includes/admin_sidebar.php';
                 }
                 ?>
                 <a href="profile.php" class="flex items-center gap-2 hover:opacity-80 transition">
-                    <?php if (!empty($headerUserPic) && file_exists('../uploads/users/' . $headerUserPic)): ?>
-                        <img src="../uploads/users/<?= htmlspecialchars($headerUserPic) ?>" alt="Profile" class="w-8 h-8 rounded-full object-cover">
+                    <?php if (!empty($headerUserPic) && file_exists(__DIR__ . '/../uploads/users/' . basename($headerUserPic))): ?>
+                        <img src="../uploads/users/<?= rawurlencode(basename($headerUserPic)) ?>" alt="Profile" class="w-8 h-8 rounded-full object-cover">
                     <?php else: ?>
                         <img src="../images/logo.png" alt="Admin" class="w-8 h-8 rounded-full">
                     <?php endif; ?>

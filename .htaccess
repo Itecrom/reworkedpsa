@@ -3,22 +3,22 @@ RewriteEngine On
 # =====================================
 # FORCE CLEAN URL FOR NEWS (OLD → NEW)
 # =====================================
-RewriteCond %{REQUEST_URI} news-details\.php$ [NC]
-RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^news-details\.php$ news/%2? [R=301,L]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/((?:[^/?\s]+/)*)news-details\.php\?(?:[^&\s]*&)*slug=([a-zA-Z0-9_-]+)(?:&|\s) [NC]
+RewriteRule ^news-details\.php$ /%1news/%2? [R=301,L]
 
 # Canonical detail URLs for events and journals
-RewriteCond %{REQUEST_URI} event-details\.php$ [NC]
-RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^event-details\.php$ events/%2? [R=301,L]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/((?:[^/?\s]+/)*)event-details\.php\?(?:[^&\s]*&)*slug=([a-zA-Z0-9_-]+)(?:&|\s) [NC]
+RewriteRule ^event-details\.php$ /%1events/%2? [R=301,L]
 
-RewriteCond %{REQUEST_URI} journal-view\.php$ [NC]
-RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^journal-view\.php$ journals/%2? [R=301,L]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/((?:[^/?\s]+/)*)journal-view\.php\?(?:[^&\s]*&)*slug=([a-zA-Z0-9_-]+)(?:&|\s) [NC]
+RewriteRule ^journal-view\.php$ /%1journals/%2? [R=301,L]
 
-RewriteCond %{REQUEST_URI} journal-view\.php$ [NC]
-RewriteCond %{QUERY_STRING} (^|&)id=([0-9]+)(&|$) [NC]
-RewriteRule ^journal-view\.php$ journal-view?id=%2 [R=301,L]
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} \s/((?:[^/?\s]+/)*)journal-view\.php\?(?:[^&\s]*&)*id=([0-9]+)(?:&|\s) [NC]
+RewriteRule ^journal-view\.php$ /%1journal-view?id=%2 [R=301,L]
 
 # Resolve canonical detail paths to their existing handlers
 RewriteRule ^events/([a-zA-Z0-9_-]+)/?$ event-details.php?slug=$1 [L,QSA]
@@ -30,8 +30,8 @@ RewriteRule ^journals/([a-zA-Z0-9_-]+)/?$ journal-view.php?slug=$1 [L,QSA]
 # Never redirect POST requests — a 301 would turn the POST into a GET and
 # silently drop submitted form data (e.g. the newsletter subscribe form).
 RewriteCond %{REQUEST_METHOD} !POST
-RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.php[\s?] [NC]
-RewriteRule ^(.+)\.php$ $1 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/([^\s?]+)\.php[\s?] [NC]
+RewriteRule ^(.+)\.php$ /%1 [R=301,L]
 
 # =====================================
 # CUSTOM ROUTES (PRIORITY)
@@ -152,9 +152,9 @@ RewriteCond %{HTTP_REFERER} !^http://localhost [NC]
 RewriteCond %{HTTP_REFERER} !^http://localhost/PSA [NC]
 RewriteRule \.(jpg|jpeg|png|gif|bmp|webp)$ - [F,NC]
 
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php82” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
+# Keep the production cPanel handler from overriding WAMP's local PHP handler.
+<If "%{HTTP_HOST} !~ /^(localhost|127\.0\.0\.1)(:\d+)?$/i">
+  <IfModule mime_module>
+    AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+  </IfModule>
+</If>

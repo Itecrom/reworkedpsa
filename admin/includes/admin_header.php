@@ -1,12 +1,14 @@
 <?php
 // Admin Header Include
 // Professional header with PSA branding and dark mode support
+require_once __DIR__ . '/../../includes/path_helper.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="<?= htmlspecialchars(sitePath('admin/'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
   <title><?= $page_title ?? 'PSA Admin' ?></title>
   <link rel="icon" href="../images/favicon.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>

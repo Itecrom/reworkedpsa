@@ -118,7 +118,7 @@ include 'includes/meta.php';
                     <div class="card-body p-0">
                         <i class=""></i>
                         <p class="card-text mx-2 mb-0">The Catholic University of Malawi Political Leadership Department.</p>
-                        <a href="/" target="_blank" class="btn btn-secondary translateY-25">Read More</a>
+                        <a href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="btn btn-secondary translateY-25">Read More</a>
                     </div>
                 </div>
             </div>

@@ -419,7 +419,7 @@ while($p = $past->fetch_assoc()):
 
 <p>
 
-<a href="/events/<?= rawurlencode($p['slug']) ?>">
+<a href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($p['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 <?= htmlspecialchars($p['title']) ?>
 

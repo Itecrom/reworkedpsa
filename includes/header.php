@@ -1,19 +1,8 @@
 <?php
 require_once __DIR__ . '/public_form_security.php';
 require_once __DIR__ . '/page_title.php';
+require_once __DIR__ . '/path_helper.php';
 startPublicFormSession();
-
-$scriptDirectory = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
-$siteBasePath = ($scriptDirectory === '/' || $scriptDirectory === '.')
-    ? ''
-    : rtrim($scriptDirectory, '/');
-
-if (!function_exists('sitePath')) {
-    function sitePath($path = '') {
-        global $siteBasePath;
-        return $siteBasePath . '/' . ltrim((string)$path, '/');
-    }
-}
 
 // Get quick announcement from database (use the main config: includes/db.php)
 require_once __DIR__ . '/db.php';
@@ -32,13 +21,13 @@ try {
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $pageSlug = trim((string)($_GET['slug'] ?? ''));
 $detailType = basename($requestPath);
-if (preg_match('~^/news/([^/]+)/?$~', $requestPath, $routeMatch)) {
+if (preg_match('~(?:^|/)news/([^/]+)/?$~', $requestPath, $routeMatch)) {
     $detailType = 'news-details.php';
     $pageSlug = rawurldecode($routeMatch[1]);
-} elseif (preg_match('~^/events/([^/]+)/?$~', $requestPath, $routeMatch)) {
+} elseif (preg_match('~(?:^|/)events/([^/]+)/?$~', $requestPath, $routeMatch)) {
     $detailType = 'event-details.php';
     $pageSlug = rawurldecode($routeMatch[1]);
-} elseif (preg_match('~^/journals/([^/]+)/?$~', $requestPath, $routeMatch)) {
+} elseif (preg_match('~(?:^|/)journals/([^/]+)/?$~', $requestPath, $routeMatch)) {
     $detailType = 'journal-view.php';
     $pageSlug = rawurldecode($routeMatch[1]);
 }

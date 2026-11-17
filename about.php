@@ -60,7 +60,7 @@ include 'includes/header.php';
                     <h3 class="text-white">We are more than a political Association</h3>
                 </div>
                 <div class="col-lg-6 text-lg-right">
-                    <a href="/" class="btn btn-light">Learn More</a>
+                    <a href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="btn btn-light">Learn More</a>
                 </div>
             </div>
         </div>

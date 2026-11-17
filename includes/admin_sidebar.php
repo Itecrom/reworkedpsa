@@ -160,8 +160,8 @@ if (isset($conn)) {
         }
         ?>
         <a href="profile.php" class="flex items-center gap-3 mb-3 px-3 hover:bg-gray-800/50 rounded-lg transition">
-            <?php if (!empty($currentUserPic) && file_exists('../uploads/users/' . $currentUserPic)): ?>
-                <img src="../uploads/users/<?= htmlspecialchars($currentUserPic) ?>" alt="Profile" class="w-8 h-8 rounded-full object-cover">
+            <?php if (!empty($currentUserPic) && file_exists(dirname(__DIR__) . '/uploads/users/' . basename($currentUserPic))): ?>
+                <img src="../uploads/users/<?= rawurlencode(basename($currentUserPic)) ?>" alt="Profile" class="w-8 h-8 rounded-full object-cover">
             <?php else: ?>
                 <img src="../images/logo.png" alt="Admin" class="w-8 h-8 rounded-full">
             <?php endif; ?>

@@ -333,7 +333,7 @@ Featured
 
 <?php endif; ?>
 
-<a href="/events/<?= rawurlencode($row['slug']) ?>">
+<a href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($row['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 <?php
   $eventImgPath = 'images/events/event-1.jpg';
@@ -362,7 +362,7 @@ alt="<?= htmlspecialchars($row['title']) ?>"
 <h4 class="mb-3">
 
 <a
-href="/events/<?= rawurlencode($row['slug']) ?>"
+href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($row['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
 style="text-decoration:none; color:inherit;"
 >
 
@@ -397,7 +397,7 @@ style="text-decoration:none; color:inherit;"
 <div class="mt-auto">
 
 <a
-href="/events/<?= rawurlencode($row['slug']) ?>"
+href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($row['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
 class="btn btn-primary btn-event"
 >
 
@@ -475,7 +475,7 @@ Latest Events
 
 <div class="latest-event">
 
-<a href="/events/<?= rawurlencode($latest['slug']) ?>">
+<a href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($latest['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 <?php
   $latestEventImg = 'images/events/event-1.jpg';
@@ -493,7 +493,7 @@ Latest Events
 <div>
 
 <a
-href="/events/<?= rawurlencode($latest['slug']) ?>"
+href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($latest['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
 class="font-weight-bold d-block"
 style="text-decoration:none;"
 >
@@ -539,7 +539,7 @@ LIMIT 6
 
 <p>
 
-<a href="/events/<?= rawurlencode($past['slug']) ?>">
+<a href="<?= htmlspecialchars(sitePath('events/' . rawurlencode($past['slug'])), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
 
 <?= htmlspecialchars($past['title']) ?>
 

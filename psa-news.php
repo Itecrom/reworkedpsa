@@ -117,7 +117,7 @@ $result = $stmt->get_result();
                 <h5 class="card-title"><?= $title ?></h5>
                 <p class="text-muted small">By <?= $author ?> | <?= $date ?></p>
                 <p class="card-text"><?= $excerpt ?></p>
-                <a href="/news/<?= $slug ?>" class="btn btn-primary btn-sm">Read More</a>
+                <a href="<?= htmlspecialchars(sitePath('news/' . rawurlencode($slug)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="btn btn-primary btn-sm">Read More</a>
               </div>
             </div>
           </div>
@@ -186,12 +186,12 @@ $result = $stmt->get_result();
             ?>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0">
-                <a href="/news/<?= $r_slug ?>">
+                <a href="<?= htmlspecialchars(sitePath('news/' . rawurlencode($r_slug)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
                   <img src="<?= $r_img ?>" alt="<?= $r_title ?>" style="width: 80px; height: 60px; object-fit: cover;" class="rounded shadow-sm">
                 </a>
               </div>
               <div class="ms-3">
-                <a href="/news/<?= $r_slug ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
+                <a href="<?= htmlspecialchars(sitePath('news/' . rawurlencode($r_slug)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
               </div>
             </div>
             <?php endwhile; ?>

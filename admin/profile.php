@@ -29,13 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle profile picture upload
     $profile_pic = $admin['profile_pic'];
     if (!empty($_FILES['profile_pic']['name'])) {
-        $uploadDir = '../uploads/users/';
-        if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-        if ($profile_pic && file_exists($uploadDir . $profile_pic)) {
-            @unlink($uploadDir . $profile_pic);
+        $uploadDir = dirname(__DIR__) . '/uploads/users/';
+        if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+            $error = "Unable to prepare profile picture storage.";
         }
-        $profile_pic = time() . '_' . basename($_FILES['profile_pic']['name']);
-        move_uploaded_file($_FILES['profile_pic']['tmp_name'], $uploadDir . $profile_pic);
+        if (empty($error)) {
+            $profile_pic = time() . '_' . basename($_FILES['profile_pic']['name']);
+            if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $uploadDir . $profile_pic)) {
+                if (!empty($admin['profile_pic']) && file_exists($uploadDir . basename($admin['profile_pic']))) {
+                    unlink($uploadDir . basename($admin['profile_pic']));
+                }
+            } else {
+                $error = "Unable to save the profile picture.";
+            }
+        }
     }
 
     // Validate current password if trying to change password
@@ -119,8 +126,8 @@ include 'includes/admin_sidebar.php';
             <div class="lg:col-span-1">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 text-center">
                     <div class="relative inline-block">
-                        <?php if (!empty($admin['profile_pic']) && file_exists('uploads/users/' . $admin['profile_pic'])): ?>
-                            <img src="uploads/users/<?= htmlspecialchars($admin['profile_pic']) ?>" alt="Profile" class="w-24 h-24 rounded-full object-cover mx-auto mb-4">
+                        <?php if (!empty($admin['profile_pic']) && file_exists(__DIR__ . '/../uploads/users/' . basename($admin['profile_pic']))): ?>
+                            <img src="../uploads/users/<?= rawurlencode(basename($admin['profile_pic'])) ?>" alt="Profile" class="w-24 h-24 rounded-full object-cover mx-auto mb-4">
                         <?php else: ?>
                             <div class="w-24 h-24 bg-psaGreen rounded-full flex items-center justify-center mx-auto mb-4">
                                 <i class="fas fa-user text-white text-3xl"></i>

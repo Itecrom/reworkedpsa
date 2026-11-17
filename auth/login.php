@@ -16,7 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if ($user && password_verify($password, $user['password'])) {
     $_SESSION['admin'] = $username;
     $_SESSION['admin_id'] = $user['id'];
-    header("Location: /dashboard");
+    $applicationDirectory = str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME'] ?? '/auth/login.php')));
+    $applicationBasePath = $applicationDirectory === '/' ? '' : rtrim($applicationDirectory, '/');
+    header('Location: ' . $applicationBasePath . '/dashboard');
     exit;
   } else {
     $loginError = "Invalid username or password";
