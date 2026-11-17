@@ -133,7 +133,7 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
   <link rel="stylesheet" href="plugins/animate/animate.css">
   <link rel="stylesheet" href="plugins/aos/aos.css">
   <link rel="stylesheet" href="plugins/swiper/swiper.min.css">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css?v=<?= (int) filemtime(__DIR__ . '/../css/style.css') ?>" rel="stylesheet">
 
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
@@ -380,6 +380,17 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand psa-brand" href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" aria-label="Malawi Political Science Association home">
                     <img src="images/logo.png" alt="Malawi Political Science Association logo">
+                    <svg class="psa-brand-chain" viewBox="0 0 100 100" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="psa-chain-colors">
+                                <stop offset="0%" stop-color="#111111"></stop>
+                                <stop offset="33%" stop-color="#cc0000"></stop>
+                                <stop offset="66%" stop-color="#117733"></stop>
+                                <stop offset="100%" stop-color="#111111"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="4" width="92" height="92" rx="1"></rect>
+                    </svg>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">

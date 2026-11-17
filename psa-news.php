@@ -57,7 +57,7 @@ $result = $stmt->get_result();
   <title>News - PSA Malawi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=<?= (int) filemtime(__DIR__ . '/css/style.css') ?>" />
 
   <style>
     .sidebar-box-shadow {

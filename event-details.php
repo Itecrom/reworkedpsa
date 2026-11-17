@@ -102,7 +102,7 @@ $galleryResult = $gallery->get_result();
 <title><?= htmlspecialchars($event['title']) ?></title>
 
 <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=<?= (int) filemtime(__DIR__ . '/css/style.css') ?>">
 
 <style>
 

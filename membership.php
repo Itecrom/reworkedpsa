@@ -36,7 +36,7 @@ startPublicFormSession();
   <!-- swiper -->
   <link rel="stylesheet" href="plugins/swiper/swiper.min.css">
   <!-- Stylesheets -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css?v=<?= (int) filemtime(__DIR__ . '/css/style.css') ?>" rel="stylesheet">
 
   <!--Favicon-->
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
