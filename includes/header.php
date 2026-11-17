@@ -16,6 +16,101 @@ try {
 } catch (Exception $e) {
     // Silently fail, will use default
 }
+
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$pageSlug = trim((string)($_GET['slug'] ?? ''));
+$detailType = basename($requestPath);
+if (preg_match('~^/news/([^/]+)/?$~', $requestPath, $routeMatch)) {
+    $detailType = 'news-details.php';
+    $pageSlug = rawurldecode($routeMatch[1]);
+} elseif (preg_match('~^/events/([^/]+)/?$~', $requestPath, $routeMatch)) {
+    $detailType = 'event-details.php';
+    $pageSlug = rawurldecode($routeMatch[1]);
+} elseif (preg_match('~^/journals/([^/]+)/?$~', $requestPath, $routeMatch)) {
+    $detailType = 'journal-view.php';
+    $pageSlug = rawurldecode($routeMatch[1]);
+}
+if ($detailType === 'journal-view.php' && $pageSlug === '' && isset($_GET['id']) && ctype_digit((string)$_GET['id'])) {
+    $journalCoverCheck = $conn->query("SHOW COLUMNS FROM journals LIKE 'cover_image'");
+    $journalHasCover = $journalCoverCheck && $journalCoverCheck->num_rows > 0;
+    $journalFields = 'title, summary, description, editorial_summary' . ($journalHasCover ? ', cover_image' : '');
+    $detailQuery = $conn->prepare('SELECT ' . $journalFields . ' FROM journals WHERE id = ? LIMIT 1');
+    $journalId = (int)$_GET['id'];
+    $detailQuery->bind_param('i', $journalId);
+    $detailQuery->execute();
+    $detailMetadata = $detailQuery->get_result()->fetch_assoc();
+    $detailQuery->close();
+    if ($detailMetadata) {
+        $page_title = $detailMetadata['title'];
+        $descriptionSource = trim((string)($detailMetadata['summary'] ?? '')) !== ''
+            ? $detailMetadata['summary']
+            : ($detailMetadata['description'] ?? $detailMetadata['editorial_summary'] ?? '');
+        $meta_description = mb_strimwidth(trim(strip_tags((string)$descriptionSource ?: $detailMetadata['title'])), 0, 300, '...');
+        $og_type = 'article';
+        $og_image = '/images/background/page-title-3.jpg';
+        if (!empty($detailMetadata['cover_image'])) {
+            $coverImagePath = 'uploads/journals/covers/' . basename($detailMetadata['cover_image']);
+            if (is_file(dirname(__DIR__) . '/' . $coverImagePath)) {
+                $og_image = '/' . $coverImagePath;
+            }
+        }
+        $canonical_url = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/') . '/journal-view?id=' . $journalId;
+    }
+}
+if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-details.php', 'journal-view.php'], true)) {
+    $detailQuery = null;
+    if ($detailType === 'news-details.php') {
+        $detailQuery = $conn->prepare("SELECT title, summary, content, image, date_posted, created_at FROM news WHERE slug = ? AND status = 'published' LIMIT 1");
+    } elseif ($detailType === 'event-details.php') {
+        $detailQuery = $conn->prepare('SELECT title, description AS summary, image, start_date AS created_at FROM events WHERE slug = ? LIMIT 1');
+    } else {
+        $journalCoverCheck = $conn->query("SHOW COLUMNS FROM journals LIKE 'cover_image'");
+        $journalHasCover = $journalCoverCheck && $journalCoverCheck->num_rows > 0;
+        $journalFields = 'title, summary, description, editorial_summary' . ($journalHasCover ? ', cover_image' : '');
+        $detailQuery = $conn->prepare('SELECT ' . $journalFields . ' FROM journals WHERE slug = ? LIMIT 1');
+    }
+
+    $detailQuery->bind_param('s', $pageSlug);
+    $detailQuery->execute();
+    $detailMetadata = $detailQuery->get_result()->fetch_assoc();
+    $detailQuery->close();
+
+    if ($detailMetadata) {
+        $og_type = 'article';
+        $page_title = $detailMetadata['title'];
+        $descriptionSource = $detailMetadata['summary'] ?? '';
+        if (trim((string)$descriptionSource) === '') {
+            $descriptionSource = $detailMetadata['description'] ?? $detailMetadata['editorial_summary'] ?? $detailMetadata['content'] ?? '';
+        }
+        $meta_description = trim(strip_tags((string)$descriptionSource));
+        if ($meta_description === '') {
+            $meta_description = $detailMetadata['title'];
+        }
+        $meta_description = mb_strimwidth($meta_description, 0, 300, '...');
+
+        $detailImage = trim((string)($detailMetadata['image'] ?? $detailMetadata['cover_image'] ?? ''));
+        if ($detailType === 'event-details.php' && $detailImage !== '' && strpos($detailImage, 'uploads/') !== 0) {
+            $eventDate = $detailMetadata['created_at'] ?? '';
+            $detailImage = 'uploads/events/' . date('Y/m', strtotime($eventDate)) . '/' . basename($detailImage);
+        } elseif ($detailType === 'news-details.php' && $detailImage !== '' && strpos($detailImage, 'uploads/') !== 0) {
+            $newsDate = $detailMetadata['date_posted'] ?? $detailMetadata['created_at'] ?? '';
+            $detailImage = 'uploads/news/' . date('Y/m', strtotime($newsDate)) . '/' . basename($detailImage);
+        } elseif ($detailType === 'journal-view.php' && $detailImage !== '') {
+            $detailImage = 'uploads/journals/covers/' . basename($detailImage);
+        }
+
+        if ($detailImage !== '' && is_file(dirname(__DIR__) . '/' . $detailImage)) {
+            $og_image = '/' . ltrim($detailImage, '/');
+        } elseif ($detailType === 'journal-view.php') {
+            $og_image = '/images/background/page-title-3.jpg';
+        }
+
+        $cleanPath = $detailType === 'news-details.php'
+            ? '/news/' . rawurlencode($pageSlug)
+            : ($detailType === 'event-details.php' ? '/events/' . rawurlencode($pageSlug) : '/journals/' . rawurlencode($pageSlug));
+        $canonical_url = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/') . $cleanPath;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +124,6 @@ try {
 
   
   <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <!-- Bootstrap -->
   <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
@@ -286,7 +379,7 @@ try {
     <div class="navigation">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand psa-brand" href="psa.php" aria-label="Malawi Political Science Association home">
+                <a class="navbar-brand psa-brand" href="/" aria-label="Malawi Political Science Association home">
                     <img src="images/logo.png" alt="Malawi Political Science Association logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -310,11 +403,11 @@ try {
                                 About Us
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="about.php">About PSA</a>
-                                <a class="dropdown-item" href="psa-history.php">History of PSA</a>
-                                <a class="dropdown-item" href="conststa.php">Constitution and <br> Mission Statement</a>
-                                <a class="dropdown-item" href="team.php">Organisation <br> Structure</a>
-                                <a class="dropdown-item" href="afpart.php">Affiliates <br> and Partners</a>
+                                <a class="dropdown-item" href="/about">About PSA</a>
+                                <a class="dropdown-item" href="/psa-history">History of PSA</a>
+                                <a class="dropdown-item" href="/conststa">Constitution and <br> Mission Statement</a>
+                                <a class="dropdown-item" href="/team">Organisation <br> Structure</a>
+                                <a class="dropdown-item" href="/afpart">Affiliates <br> and Partners</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -323,8 +416,8 @@ try {
                                 PSA Membership
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="members.php">PSA Members</a>
-                                <a class="dropdown-item" href="membership.php">Become a Member</a>
+                                <a class="dropdown-item" href="/members">PSA Members</a>
+                                <a class="dropdown-item" href="/membership">Become a Member</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -333,8 +426,8 @@ try {
                                 News & Events
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="psa-news.php">News</a>
-                                <a class="dropdown-item" href="psa-events.php">Events</a>
+                                <a class="dropdown-item" href="/psa-news">News</a>
+                                <a class="dropdown-item" href="/psa-events">Events</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -355,13 +448,13 @@ try {
                                 Publications
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="journal.php">Journal Articles</a>
+                                <a class="dropdown-item" href="/journal">Journal Articles</a>
                                 <a class="dropdown-item" href="">Books</a>
                                 <a class="dropdown-item" href="">Policy Papers</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.php">Contacts</a>
+                            <a class="nav-link" href="/contact">Contacts</a>
                         </li>
                     </ul>
                 </div>

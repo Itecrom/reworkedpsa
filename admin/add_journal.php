@@ -12,6 +12,7 @@ if (!isset($_SESSION['admin'])) {
 include '../includes/db.php';
 include '../includes/pdf_helper.php';
 include '../includes/audit_helper.php';
+include '../includes/journal_cover_helper.php';
 
 $success = '';
 $error = '';
@@ -33,6 +34,12 @@ if (!is_dir($uploadDir)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        ensureJournalCoverColumn($conn);
+    } catch (mysqli_sql_exception $e) {
+        error_log('Unable to prepare journal cover field: ' . $e->getMessage());
+        $error = 'Unable to prepare journal cover storage. Please check the database permissions.';
+    }
     $title = trim($_POST['title'] ?? '');
     $volume = trim($_POST['volume'] ?? '');
     $issue_no = trim($_POST['issue_no'] ?? '');
@@ -41,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $author = trim($_POST['author'] ?? '');
     $summary = trim($_POST['summary'] ?? '');
     $tags = trim($_POST['tags'] ?? '');
+    $coverImage = '';
+    try {
+        $coverImage = uploadJournalCover($_FILES['cover_image'] ?? []);
+    } catch (RuntimeException $e) {
+        $error = $e->getMessage();
+    }
     $slug = generateSlug($title);
 
     // Check for duplicate slug and append number if needed
@@ -75,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$error) {
         // Insert main journal with new fields
-        $stmt = $conn->prepare("INSERT INTO journals (title, volume, issue_no, journal_date, editorial_summary, author, summary, tags, file, created_at, slug) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssssss", $title, $volume, $issue_no, $journal_date, $editorial_summary, $author, $summary, $tags, $pdfName, $journal_date, $slug);
+        $stmt = $conn->prepare("INSERT INTO journals (title, volume, issue_no, journal_date, editorial_summary, author, summary, tags, file, cover_image, created_at, slug) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssssssss", $title, $volume, $issue_no, $journal_date, $editorial_summary, $author, $summary, $tags, $pdfName, $coverImage, $journal_date, $slug);
 
         if ($stmt->execute()) {
             $journal_id = $conn->insert_id;
@@ -125,9 +138,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             logAudit($conn, 'create', 'journals', $journal_id, null, ['title' => $title, 'volume' => $volume]);
             $success .= "Journal and articles added successfully!";
         } else {
+            if ($coverImage !== '') {
+                removeJournalCover($coverImage);
+            }
             $error = "Failed to add journal: " . $conn->error;
         }
         $stmt->close();
+    }
+    if ($error && $coverImage !== '' && !isset($journal_id)) {
+        removeJournalCover($coverImage);
     }
 }
 ?>
@@ -320,6 +339,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="lg:col-span-2">
                 <label class="block mb-1 font-semibold text-gray-700">Keywords (comma separated)</label>
                 <input name="tags" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen focus:border-transparent" placeholder="e.g. politics, governance, democracy" />
+              </div>
+              <div class="lg:col-span-3">
+                <label class="block mb-1 font-semibold text-gray-700">Journal Cover Image (used as sharing thumbnail)</label>
+                <input type="file" name="cover_image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen focus:border-transparent" />
+                <p class="text-sm text-gray-500 mt-1">JPG, PNG or WebP, up to 5 MB.</p>
               </div>
               <div class="lg:col-span-3">
                 <label class="block mb-1 font-semibold text-gray-700">Journal PDF (Optional - Full Journal)</label>

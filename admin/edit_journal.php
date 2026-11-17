@@ -4,6 +4,7 @@ if (!isset($_SESSION['admin'])) header("Location: auth/login.php");
 include '../includes/db.php';
 include '../includes/pdf_helper.php';
 include '../includes/audit_helper.php';
+include '../includes/journal_cover_helper.php';
 
 $success = '';
 $error = '';
@@ -13,6 +14,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id = (int) $_GET['id'];
+ensureJournalCoverColumn($conn);
 $journal = $conn->query("SELECT * FROM journals WHERE id = $id")->fetch_assoc();
 if (!$journal) {
   die("Journal not found.");
@@ -34,6 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $author = trim($_POST['author'] ?? '');
   $summary = trim($_POST['summary'] ?? '');
   $tags = trim($_POST['tags'] ?? '');
+  $coverImage = $journal['cover_image'] ?? '';
+  $newCoverImage = '';
+  $journalUpdated = false;
+  try {
+    $newCoverImage = uploadJournalCover($_FILES['cover_image'] ?? []);
+    if ($newCoverImage !== '') {
+      $coverImage = $newCoverImage;
+    }
+  } catch (RuntimeException $e) {
+    $error = $e->getMessage();
+  }
 
   $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title), '-'));
 
@@ -56,16 +69,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if (!$error) {
-    $stmt = $conn->prepare("UPDATE journals SET title=?, volume=?, issue_no=?, journal_date=?, editorial_summary=?, author=?, summary=?, tags=?, slug=?, file=?, created_at=? WHERE id=?");
-    $stmt->bind_param("sssssssssssi", $title, $volume, $issue_no, $journal_date, $editorial_summary, $author, $summary, $tags, $slug, $pdfName, $journal_date, $id);
+    $stmt = $conn->prepare("UPDATE journals SET title=?, volume=?, issue_no=?, journal_date=?, editorial_summary=?, author=?, summary=?, tags=?, slug=?, file=?, cover_image=?, created_at=? WHERE id=?");
+    $stmt->bind_param("ssssssssssssi", $title, $volume, $issue_no, $journal_date, $editorial_summary, $author, $summary, $tags, $slug, $pdfName, $coverImage, $journal_date, $id);
 
     if ($stmt->execute()) {
+      $journalUpdated = true;
       $oldValues = ['title' => $journal['title'], 'volume' => $journal['volume']];
       $newValues = ['title' => $title, 'volume' => $volume];
       logAudit($conn, 'update', 'journals', $id, $oldValues, $newValues);
       $success .= "Journal updated successfully!";
+      if ($newCoverImage !== '' && !empty($journal['cover_image'])) {
+        $oldCoverPath = dirname(__DIR__) . '/uploads/journals/covers/' . basename($journal['cover_image']);
+        if (is_file($oldCoverPath)) {
+          unlink($oldCoverPath);
+        }
+      }
+      if (!$journalUpdated && $newCoverImage !== '') {
+        removeJournalCover($newCoverImage);
+      }
       $journal = $conn->query("SELECT * FROM journals WHERE id = $id")->fetch_assoc();
     } else {
+      if ($newCoverImage !== '') {
+        removeJournalCover($newCoverImage);
+      }
       $error = "Failed to update journal.";
     }
   }
@@ -317,6 +343,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="lg:col-span-3">
                 <label class="block mb-1 font-semibold text-gray-700">Journal Summary</label>
                 <textarea name="summary" rows="3" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen focus:border-transparent" placeholder="Brief summary of this journal issue..."><?= htmlspecialchars($journal['summary'] ?? '') ?></textarea>
+              </div>
+              <div class="lg:col-span-3">
+                <label class="block mb-1 font-semibold text-gray-700">Journal Cover Image (used as sharing thumbnail)</label>
+                <input type="file" name="cover_image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-psaGreen focus:border-transparent" />
+                <p class="text-sm text-gray-500 mt-1">JPG, PNG or WebP, up to 5 MB. Leave blank to keep the current cover.</p>
+                <?php if (!empty($journal['cover_image'])): ?>
+                  <img src="../uploads/journals/covers/<?= rawurlencode(basename($journal['cover_image'])) ?>" alt="Current journal cover" class="mt-2 max-h-40 rounded">
+                <?php endif; ?>
               </div>
               <div class="lg:col-span-3">
                 <label class="block mb-1 font-semibold text-gray-700">Journal PDF (leave blank to keep existing)</label>

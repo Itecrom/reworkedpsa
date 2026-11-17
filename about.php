@@ -8,7 +8,7 @@ include 'includes/header.php';
 <?php renderPageTitle('About Malawi PSA', [
     ['label' => 'Home', 'url' => '/'],
     ['label' => 'About Us', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+]); ?>
 
 <section class="section">
     <div class="container">

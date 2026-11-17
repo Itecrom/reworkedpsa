@@ -17,7 +17,6 @@ RewriteCond %{REQUEST_URI} ^/journal-view\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
 RewriteRule ^journal-view\.php$ /journals/%2? [R=301,L]
 
-# Keep ID-based journal links working while moving to slug URLs
 RewriteCond %{REQUEST_URI} ^/journal-view\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)id=([0-9]+)(&|$) [NC]
 RewriteRule ^journal-view\.php$ /journal-view?id=%2 [R=301,L]

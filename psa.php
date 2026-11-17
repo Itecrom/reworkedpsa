@@ -265,7 +265,7 @@ include 'includes/header.php';
       if (!function_exists('news_url')) {
 
         function news_url($slug) {
-          return "news/" . rawurlencode($slug);
+          return "/news/" . rawurlencode($slug);
         }
       }
 
@@ -363,7 +363,7 @@ include 'includes/header.php';
 
             <a class="h4 d-block mb-10"
                href="<?= ($post_type == 'event')
-                    ? 'events/' . rawurlencode($slug)
+                    ? '/events/' . rawurlencode($slug)
                     : news_url($slug) ?>">
 
                 <?= $title ?>
@@ -411,7 +411,7 @@ include 'includes/header.php';
 
           <a
               href="<?= ($post_type == 'event')
-                    ? 'events/' . rawurlencode($slug)
+                    ? '/events/' . rawurlencode($slug)
                     : news_url($slug) ?>"
               class="btn btn-sm btn-primary mt-2"
           >

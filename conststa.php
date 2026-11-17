@@ -26,9 +26,9 @@ include 'includes/header.php';
 
 <?php renderPageTitle('PSA Constitution', [
     ['label' => 'Home', 'url' => '/'],
-    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'About Us', 'url' => '/about'],
     ['label' => 'Constitution', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+]); ?>
 
 <!-- project single -->
 <section class="section">

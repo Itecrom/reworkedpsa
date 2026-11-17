@@ -9,9 +9,9 @@ include 'includes/meta.php';
 
 <?php renderPageTitle('Affiliates and Partners', [
     ['label' => 'Home', 'url' => '/'],
-    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'About Us', 'url' => '/about'],
     ['label' => 'Affiliates and Partners', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+]); ?>
 
 <!-- Current Members -->
 <section class="section">

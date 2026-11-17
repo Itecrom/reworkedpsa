@@ -6,7 +6,7 @@
         <div class="col-md-4">
           <div class="mb-5 mb-md-0 text-center text-md-left">
             <!-- logo -->
-            <a href="psa.php" aria-label="Malawi Political Science Association home">
+            <a href="/" aria-label="Malawi Political Science Association home">
               <img class="footer-logo mb-30" src="images/logo-footer.png" alt="Malawi Political Science Association">
             </a>
             <p class="text-white mb-30">We have diverse membership of academics and professionals in the fields of political science, 
@@ -43,7 +43,7 @@
           <h4 class="text-white mb-4">What we do</h4>
           <ul class="footer-links">
             <li>
-              <a href="journal.php">Journals</a>
+              <a href="/journal">Journals</a>
             </li>
             <li>
               <a href="">Publications</a>
@@ -55,7 +55,7 @@
               <a href="">Academics</a>
             </li>
             <li>
-              <a href="psa-news.php">News</a>
+              <a href="/psa-news">News</a>
             </li>
           </ul>
         </div>
@@ -64,16 +64,16 @@
           <h4 class="text-white mb-4">Quick Links</h4>
           <ul class="footer-links">
             <li>
-              <a href="psa-history.php">Our History</a>
+              <a href="/psa-history">Our History</a>
             </li>
             <li>
-              <a href="about.php">About Us</a>
+              <a href="/about">About Us</a>
             </li>
             <li>
-              <a href="contact.php">Contact Us</a>
+              <a href="/contact">Contact Us</a>
             </li>
             <li>
-              <a href="afpart.php">Partners</a>
+              <a href="/afpart">Partners</a>
             </li>
             <li>
               <a href="#">Privacy Policy</a>

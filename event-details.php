@@ -1,6 +1,10 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include 'includes/db.php';
+include 'includes/header.php';
 
 if (!isset($_GET['slug']) || empty($_GET['slug'])) {
     die("No event specified.");
@@ -86,32 +90,19 @@ $gallery->execute();
 
 $galleryResult = $gallery->get_result();
 
-function resolveEventImagePath($image, $date) {
-    if (!empty($image)) {
-        if (strpos($image, 'uploads/') === 0 && file_exists($image)) {
-            return $image;
-        }
-
-        $year = date('Y', strtotime($date));
-        $month = date('m', strtotime($date));
-        $path = "uploads/events/$year/$month/$image";
-        if (file_exists($path)) {
-            return $path;
-        }
-    }
-
-    return 'images/events/event-1.jpg';
-}
-
-$eventImage = resolveEventImagePath($event['image'], $event['start_date']);
-$siteBaseUrl = rtrim(getenv('PSA_SITE_URL') ?: 'https://malawipsa.org', '/');
-$page_title = $event['title'] . ' | Malawi Political Science Association';
-$meta_description = trim(preg_replace('/\s+/', ' ', strip_tags($event['description'] ?? '')));
-$meta_description = mb_strimwidth($meta_description, 0, 250, '...');
-$og_image = $eventImage;
-$canonical_url = $siteBaseUrl . '/events/' . rawurlencode($event['slug']);
-include 'includes/header.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title><?= htmlspecialchars($event['title']) ?></title>
+
+<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
 
 <style>
 
@@ -147,12 +138,43 @@ include 'includes/header.php';
 
 </style>
 
+</head>
+
+<body>
+
+<?php
+function resolveEventImagePath($image, $date) {
+    if (!empty($image)) {
+        if (strpos($image, 'uploads/') === 0) {
+            if (file_exists($image)) {
+                return htmlspecialchars($image, ENT_QUOTES, 'UTF-8');
+            }
+        } else {
+            $year = date('Y', strtotime($date));
+            $month = date('m', strtotime($date));
+            $path = "uploads/events/$year/$month/$image";
+            if (file_exists($path)) {
+                return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+            }
+        }
+    }
+    return 'images/events/event-1.jpg';
+}
+
+$eventImage = resolveEventImagePath($event['image'], $event['start_date']);
+$heroBg = 'images/background/page-title.jpg';
+if ($eventImage !== 'images/events/event-1.jpg') {
+    $heroBg = '/' . ltrim($eventImage, '/');
+}
+?>
+
+<!-- TITLE -->
 <?php renderPageTitle($event['title'], [
     ['label' => 'Home', 'url' => '/'],
-    ['label' => 'News & Events', 'url' => 'psa-news'],
-    ['label' => 'Events', 'url' => 'psa-events'],
+    ['label' => 'News and Events', 'url' => '/psa-news'],
+    ['label' => 'Events', 'url' => '/psa-events'],
     ['label' => $event['title'], 'url' => ''],
-], $eventImage); ?>
+], $heroBg); ?>
 
 <section class="section bg-light">
 
@@ -165,7 +187,7 @@ include 'includes/header.php';
 
 <div class="bg-white p-4 shadow-sm rounded">
 
-<img src="<?= htmlspecialchars($eventImage, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" class="event-image rounded mb-4" alt="<?= htmlspecialchars($event['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
+<img src="<?= $eventImage ?>" class="event-image rounded mb-4" alt="<?= htmlspecialchars($event['title']) ?>">
 
 <!-- COUNTDOWN -->
 <div class="countdown-box">
@@ -397,7 +419,7 @@ while($p = $past->fetch_assoc()):
 
 <p>
 
-<a href="events/<?= rawurlencode($p['slug']) ?>">
+<a href="/events/<?= rawurlencode($p['slug']) ?>">
 
 <?= htmlspecialchars($p['title']) ?>
 
@@ -463,3 +485,6 @@ document.getElementById("countdown").innerHTML =
 </script>
 
 <?php include 'includes/footer.php'; ?>
+
+</body>
+</html>

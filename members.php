@@ -168,9 +168,9 @@ $result = $stmt->get_result();
 </style>
 <?php renderPageTitle('PSA Members', [
   ['label' => 'Home', 'url' => '/'],
-  ['label' => 'Membership', 'url' => 'membership'],
+  ['label' => 'PSA Membership', 'url' => ''],
   ['label' => 'Members', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+]); ?>
 
 <section class="container mt-4">
   <form method="GET" class="search-bar">

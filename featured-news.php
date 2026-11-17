@@ -9,9 +9,9 @@ $featuredNews = $conn->query("SELECT * FROM featured_news WHERE is_active = 1 OR
 <!-- Page Title -->
 <?php renderPageTitle('Featured News', [
   ['label' => 'Home', 'url' => '/'],
-  ['label' => 'News & Events', 'url' => ''],
+  ['label' => 'News and Events', 'url' => '/psa-news'],
   ['label' => 'Featured News', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+]); ?>
 
 <section class="section bg-light">
   <div class="container">

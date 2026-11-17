@@ -36,7 +36,7 @@ include 'includes/header.php';
 
 <?php renderPageTitle('Our Leadership and Team', [
     ['label' => 'Home', 'url' => '/'],
-    ['label' => 'About Us', 'url' => 'about'],
+    ['label' => 'About Us', 'url' => '/about'],
     ['label' => 'Organisation Structure', 'url' => ''],
 ], 'images/background/page-title-2.jpg', 'Meet the people serving the Malawi Political Science Association.'); ?>
 

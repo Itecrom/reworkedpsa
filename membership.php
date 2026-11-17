@@ -166,7 +166,8 @@ startPublicFormSession();
 
 <?php renderPageTitle('PSA Membership', [
     ['label' => 'Home', 'url' => '/'],
-    ['label' => 'Membership', 'url' => ''],
+    ['label' => 'PSA Membership', 'url' => ''],
+    ['label' => 'Become a Member', 'url' => ''],
 ], 'images/background/membership-title.jpg'); ?>
 
 <!-- Membership -->
@@ -435,7 +436,9 @@ startPublicFormSession();
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            <span class="text-primary">Malawi PSA</span> &copy; 2025-2026 All Right Reserved</p>
+            <span class="text-primary">Malawi PSA</span> &copy; <?= date('Y') ?> All Right Reserved |
+            Developed by <a href="https://leonardjjmhone.gt.tc/?i=1" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone</a>,
+            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a></p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">

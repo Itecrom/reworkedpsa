@@ -1,6 +1,8 @@
 <?php 
 include 'includes/db.php';
 
+include 'includes/header.php';
+
 function resolveImagePath($image, $date) {
   if (!empty($image)) {
     // If image already contains a full path, use it as-is
@@ -46,10 +48,16 @@ if ($search) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
-$page_title = 'News and Events | Malawi Political Science Association';
-$meta_description = 'News, updates and announcements from the Malawi Political Science Association.';
-include 'includes/header.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>News - PSA Malawi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
   <style>
     .sidebar-box-shadow {
@@ -74,11 +82,13 @@ include 'includes/header.php';
       padding-left: 20px;
     }
   </style>
+</head>
+<body>
 
 <?php renderPageTitle('News and Events', [
   ['label' => 'Home', 'url' => '/'],
-  ['label' => 'News & Events', 'url' => ''],
-], 'images/background/page-title.jpg'); ?>
+  ['label' => 'News and Events', 'url' => ''],
+]); ?>
 
 <section class="section bg-light">
   <div class="container">
@@ -87,7 +97,7 @@ include 'includes/header.php';
         <div class="row">
           <?php while ($row = $result->fetch_assoc()):
             $title = htmlspecialchars($row['title'] ?? '', ENT_QUOTES, 'UTF-8');
-            $slug = rawurlencode($row['slug'] ?? '');
+            $slug = urlencode($row['slug'] ?? '');
             $author = htmlspecialchars($row['author'] ?? 'Admin', ENT_QUOTES, 'UTF-8');
             $date = date('d M Y', strtotime($row['created_at']));
             $tags = htmlspecialchars($row['tags'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -107,7 +117,7 @@ include 'includes/header.php';
                 <h5 class="card-title"><?= $title ?></h5>
                 <p class="text-muted small">By <?= $author ?> | <?= $date ?></p>
                 <p class="card-text"><?= $excerpt ?></p>
-                <a href="news/<?= $slug ?>" class="btn btn-primary btn-sm">Read More</a>
+                <a href="/news/<?= $slug ?>" class="btn btn-primary btn-sm">Read More</a>
               </div>
             </div>
           </div>
@@ -171,17 +181,17 @@ include 'includes/header.php';
             $recentRes = $conn->query("SELECT title, slug, image, date_posted, created_at FROM news WHERE status='published' ORDER BY created_at DESC LIMIT 5");
             while ($r = $recentRes->fetch_assoc()):
               $r_title = htmlspecialchars($r['title']);
-              $r_slug = rawurlencode($r['slug'] ?? '');
+              $r_slug = urlencode($r['slug'] ?? '');
               $r_img = resolveImagePath($r['image'], $r['date_posted'] ?? $r['created_at']);
             ?>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0">
-                <a href="news/<?= $r_slug ?>">
+                <a href="/news/<?= $r_slug ?>">
                   <img src="<?= $r_img ?>" alt="<?= $r_title ?>" style="width: 80px; height: 60px; object-fit: cover;" class="rounded shadow-sm">
                 </a>
               </div>
               <div class="ms-3">
-                <a href="news/<?= $r_slug ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
+                <a href="/news/<?= $r_slug ?>" class="text-dark fw-semibold"><?= $r_title ?></a>
               </div>
             </div>
             <?php endwhile; ?>
@@ -194,3 +204,6 @@ include 'includes/header.php';
 </section>
 
 <?php include 'includes/footer.php'; ?>
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+</body>
+</html>
