@@ -162,7 +162,7 @@ function resolveEventImagePath($image, $date) {
 }
 
 $eventImage = resolveEventImagePath($event['image'], $event['start_date']);
-$heroBg = 'images/background/page-title.jpg';
+$heroBg = 'images/background/page-title-2.jpg';
 if ($eventImage !== 'images/events/event-1.jpg') {
     $heroBg = '/' . ltrim($eventImage, '/');
 }

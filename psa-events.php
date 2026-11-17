@@ -283,7 +283,7 @@ LIMIT 5
     ['label' => 'Home', 'url' => '/'],
     ['label' => 'News and Events', 'url' => '/psa-news'],
     ['label' => 'Events', 'url' => ''],
-], 'images/background/page-title.jpg', 'PSA Events bring together scholars, professionals, researchers and policymakers through conferences, seminars, workshops and governance discussions that shape Malawi and Africa.'); ?>
+], 'images/background/page-title-2.jpg', 'PSA Events bring together scholars, professionals, researchers and policymakers through conferences, seminars, workshops and governance discussions that shape Malawi and Africa.'); ?>
 
 <!-- =========================
      EVENTS SECTION

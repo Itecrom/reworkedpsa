@@ -311,13 +311,11 @@ startPublicFormSession();
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6-white.png" alt="client-logo"></a>            
 			<a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-1-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-2-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-3-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-4-white.png" alt="client-logo"></a>
             <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-5-white.png" alt="client-logo"></a>
-            <a href="#" class="text-center d-block outline-0 py-3 px-2"><img class="d-unset" src="images/client-logo/client-logo-6-white.png" alt="client-logo"></a> 
 		</div>
     </div>
 </section>

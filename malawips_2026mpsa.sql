@@ -328,6 +328,7 @@ CREATE TABLE `journals` (
   `editorial_summary` text,
   `slug` varchar(199) DEFAULT NULL,
   `file` varchar(255) DEFAULT NULL,
+  `cover_image` varchar(255) DEFAULT NULL,
   `downloads` int DEFAULT '0',
   `views` int DEFAULT '0',
   `uploaded_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

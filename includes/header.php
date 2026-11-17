@@ -3,6 +3,18 @@ require_once __DIR__ . '/public_form_security.php';
 require_once __DIR__ . '/page_title.php';
 startPublicFormSession();
 
+$scriptDirectory = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+$siteBasePath = ($scriptDirectory === '/' || $scriptDirectory === '.')
+    ? ''
+    : rtrim($scriptDirectory, '/');
+
+if (!function_exists('sitePath')) {
+    function sitePath($path = '') {
+        global $siteBasePath;
+        return $siteBasePath . '/' . ltrim((string)$path, '/');
+    }
+}
+
 // Get quick announcement from database (use the main config: includes/db.php)
 require_once __DIR__ . '/db.php';
 $announcement = null;
@@ -115,14 +127,12 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">
     <?php include_once __DIR__ . '/meta.php'; ?>
 
     <!--Adsense-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4801370358631853" crossorigin="anonymous"></script>
 
-  <base href="/">
-
-  
   <!-- mobile responsive meta -->
   
   <!-- Bootstrap -->
@@ -379,7 +389,7 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
     <div class="navigation">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand psa-brand" href="/" aria-label="Malawi Political Science Association home">
+                <a class="navbar-brand psa-brand" href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" aria-label="Malawi Political Science Association home">
                     <img src="images/logo.png" alt="Malawi Political Science Association logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -403,11 +413,11 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                                 About Us
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="/about">About PSA</a>
-                                <a class="dropdown-item" href="/psa-history">History of PSA</a>
-                                <a class="dropdown-item" href="/conststa">Constitution and <br> Mission Statement</a>
-                                <a class="dropdown-item" href="/team">Organisation <br> Structure</a>
-                                <a class="dropdown-item" href="/afpart">Affiliates <br> and Partners</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('about'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">About PSA</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('psa-history'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">History of PSA</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('conststa'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Constitution and <br> Mission Statement</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('team'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Organisation <br> Structure</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('afpart'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Affiliates <br> and Partners</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -416,8 +426,8 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                                 PSA Membership
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="/members">PSA Members</a>
-                                <a class="dropdown-item" href="/membership">Become a Member</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('members'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">PSA Members</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('membership'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Become a Member</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -426,8 +436,8 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                                 News & Events
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="/psa-news">News</a>
-                                <a class="dropdown-item" href="/psa-events">Events</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">News</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('psa-events'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Events</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -448,13 +458,13 @@ if ($pageSlug !== '' && in_array($detailType, ['news-details.php', 'event-detail
                                 Publications
                             </a>
                             <div class="dropdown-menu" >
-                                <a class="dropdown-item" href="/journal">Journal Articles</a>
+                                <a class="dropdown-item" href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Journal Articles</a>
                                 <a class="dropdown-item" href="">Books</a>
                                 <a class="dropdown-item" href="">Policy Papers</a>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contacts</a>
+                            <a class="nav-link" href="<?= htmlspecialchars(sitePath('contact'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Contacts</a>
                         </li>
                     </ul>
                 </div>

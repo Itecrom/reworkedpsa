@@ -6,7 +6,7 @@
         <div class="col-md-4">
           <div class="mb-5 mb-md-0 text-center text-md-left">
             <!-- logo -->
-            <a href="/" aria-label="Malawi Political Science Association home">
+            <a href="<?= htmlspecialchars(sitePath(''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" aria-label="Malawi Political Science Association home">
               <img class="footer-logo mb-30" src="images/logo-footer.png" alt="Malawi Political Science Association">
             </a>
             <p class="text-white mb-30">We have diverse membership of academics and professionals in the fields of political science, 
@@ -43,7 +43,7 @@
           <h4 class="text-white mb-4">What we do</h4>
           <ul class="footer-links">
             <li>
-              <a href="/journal">Journals</a>
+              <a href="<?= htmlspecialchars(sitePath('journal'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Journals</a>
             </li>
             <li>
               <a href="">Publications</a>
@@ -55,7 +55,7 @@
               <a href="">Academics</a>
             </li>
             <li>
-              <a href="/psa-news">News</a>
+              <a href="<?= htmlspecialchars(sitePath('psa-news'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">News</a>
             </li>
           </ul>
         </div>
@@ -64,16 +64,16 @@
           <h4 class="text-white mb-4">Quick Links</h4>
           <ul class="footer-links">
             <li>
-              <a href="/psa-history">Our History</a>
+              <a href="<?= htmlspecialchars(sitePath('psa-history'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Our History</a>
             </li>
             <li>
-              <a href="/about">About Us</a>
+              <a href="<?= htmlspecialchars(sitePath('about'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">About Us</a>
             </li>
             <li>
-              <a href="/contact">Contact Us</a>
+              <a href="<?= htmlspecialchars(sitePath('contact'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Contact Us</a>
             </li>
             <li>
-              <a href="/afpart">Partners</a>
+              <a href="<?= htmlspecialchars(sitePath('afpart'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>">Partners</a>
             </li>
             <li>
               <a href="#">Privacy Policy</a>

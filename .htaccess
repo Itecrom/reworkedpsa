@@ -1,25 +1,24 @@
 RewriteEngine On
-RewriteBase /
 
 # =====================================
 # FORCE CLEAN URL FOR NEWS (OLD → NEW)
 # =====================================
-RewriteCond %{REQUEST_URI} ^/news-details\.php$ [NC]
+RewriteCond %{REQUEST_URI} news-details\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^news-details\.php$ /news/%2? [R=301,L]
+RewriteRule ^news-details\.php$ news/%2? [R=301,L]
 
 # Canonical detail URLs for events and journals
-RewriteCond %{REQUEST_URI} ^/event-details\.php$ [NC]
+RewriteCond %{REQUEST_URI} event-details\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^event-details\.php$ /events/%2? [R=301,L]
+RewriteRule ^event-details\.php$ events/%2? [R=301,L]
 
-RewriteCond %{REQUEST_URI} ^/journal-view\.php$ [NC]
+RewriteCond %{REQUEST_URI} journal-view\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)slug=([a-zA-Z0-9_-]+)(&|$) [NC]
-RewriteRule ^journal-view\.php$ /journals/%2? [R=301,L]
+RewriteRule ^journal-view\.php$ journals/%2? [R=301,L]
 
-RewriteCond %{REQUEST_URI} ^/journal-view\.php$ [NC]
+RewriteCond %{REQUEST_URI} journal-view\.php$ [NC]
 RewriteCond %{QUERY_STRING} (^|&)id=([0-9]+)(&|$) [NC]
-RewriteRule ^journal-view\.php$ /journal-view?id=%2 [R=301,L]
+RewriteRule ^journal-view\.php$ journal-view?id=%2 [R=301,L]
 
 # Resolve canonical detail paths to their existing handlers
 RewriteRule ^events/([a-zA-Z0-9_-]+)/?$ event-details.php?slug=$1 [L,QSA]
@@ -31,8 +30,8 @@ RewriteRule ^journals/([a-zA-Z0-9_-]+)/?$ journal-view.php?slug=$1 [L,QSA]
 # Never redirect POST requests — a 301 would turn the POST into a GET and
 # silently drop submitted form data (e.g. the newsletter subscribe form).
 RewriteCond %{REQUEST_METHOD} !POST
-RewriteCond %{THE_REQUEST} \s/([^.]+)\.php[\s?] [NC]
-RewriteRule ^ %1 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+[^?\s]+\.php[\s?] [NC]
+RewriteRule ^(.+)\.php$ $1 [R=301,L]
 
 # =====================================
 # CUSTOM ROUTES (PRIORITY)

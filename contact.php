@@ -74,7 +74,7 @@ include 'includes/header.php';
 <?php renderPageTitle('Contact the Association', [
     ['label' => 'Home', 'url' => '/'],
     ['label' => 'Contact Us', 'url' => ''],
-], 'images/background/page-title.jpg', 'We welcome questions, partnerships and research enquiries.'); ?>
+], 'images/background/page-title-2.jpg', 'We welcome questions, partnerships and research enquiries.'); ?>
 
 <section class="section contact-page">
     <div class="container">

@@ -1,6 +1,6 @@
 <?php
 
-function renderPageTitle($title, $breadcrumbs, $background = 'images/background/page-title.jpg', $description = '') {
+function renderPageTitle($title, $breadcrumbs, $background = 'images/background/page-title-2.jpg', $description = '') {
     $safeTitle = htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $safeBackground = htmlspecialchars($background, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     ?>
@@ -15,7 +15,8 @@ function renderPageTitle($title, $breadcrumbs, $background = 'images/background/
                     <?php foreach ($breadcrumbs as $breadcrumb): ?>
                         <?php $label = htmlspecialchars($breadcrumb['label'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?>
                         <?php if (!empty($breadcrumb['url'])): ?>
-                            <li class="breadcrumb-item"><a href="<?= htmlspecialchars($breadcrumb['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"><?= $label ?></a></li>
+                            <?php $url = function_exists('sitePath') ? sitePath($breadcrumb['url']) : $breadcrumb['url']; ?>
+                            <li class="breadcrumb-item"><a href="<?= htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"><?= $label ?></a></li>
                         <?php else: ?>
                             <li class="breadcrumb-item active" aria-current="page"><?= $label ?></li>
                         <?php endif; ?>
