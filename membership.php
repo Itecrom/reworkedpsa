@@ -437,8 +437,8 @@ startPublicFormSession();
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone (lm.itecictsolutions.com)</a>,
-            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC (itecictsolutions.com)</a></p>
+            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone</a>,
+            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a></p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">

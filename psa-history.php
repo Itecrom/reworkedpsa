@@ -235,7 +235,7 @@ startPublicFormSession();
             </aside>
             <!-- project content -->
             <div class="col-lg-8 order-lg-2 order-1">
-                <img class="img-fluid w-100 mb-60" src="images/project/project-single.jpg" alt="project image">
+                <img class="img-fluid w-100 mb-60" src="images/service/service-single.jpg" alt="Malawi Political Science Association members">
                 <h3 class="mb-10">Political Science Association</h3>
                 <p class="mb-40">Political Science Association (PSA) is a registered entity with 
                 a diverse membership of academics and professionals in the fields of Political Science, 
@@ -433,8 +433,8 @@ startPublicFormSession();
       <div class="row">
         <div class="col-lg-6 col-md-5">
           <p class="text-white text-center text-md-left">
-            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone (lm.itecictsolutions.com)</a>,
-            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC (itecictsolutions.com)</a></p>
+            &copy; <?= date('Y') ?> Malawi PSA | Dev. <a href="https://lm.itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">Leonard Mhone</a>,
+            Powered by <a href="https://itecictsolutions.com" target="_blank" rel="noopener noreferrer" class="text-primary">ITEC</a></p>
         </div>
         <div class="col-lg-6 col-md-7">
           <ul class="list-inline text-center text-md-right">

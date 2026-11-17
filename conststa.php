@@ -92,7 +92,7 @@ include 'includes/header.php';
             </aside>
             <!-- project content -->
             <div class="col-lg-8 order-lg-1 order-2">
-                <img class="img-fluid w-100 mb-60" src="images/project/project-single.jpg" alt="Constitution">
+                <img class="img-fluid w-100 mb-60" src="images/service/service-single.jpg" alt="Malawi Political Science Association members">
                 <div class="tab-content" id="myTabContent">
                     <!-- tab 1 -->
                     <div class="tab-pane fade show active" id="challanges" role="tabpanel" aria-labelledby="challanges-tab">
